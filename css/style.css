@@ -49,7 +49,7 @@
 		href="/chapters/110-introduction.html">Intro </a><a
 		href="/chapters/800-headers.html">Headers </a><a
 		href="/chapters/820-instructions.html">Instructions </a><a
-		href="/chapters/850-macros.html">Macros</a>
+		href="forum.html">Forum</a>
 	<li class=menu-link span=3>
 	<li class=menu-link span=1 style=position:relative>
 		<img src="/img/under-construction.png" class=slidein style="width:100px;position:fixed;top:0px">
@@ -66,11 +66,10 @@
 	
 </ul>
 
-			<div class=enroute><a href="http://enroute.osgi.org">Supported by OSGi enRoute <img src="/img/EnRouteIcon_CMYK.png"></a></div>
 			</div>
 			
 		<li span=9>
-			<div class=notes-margin>
+			<div>
 				<h1> </h1>
 				@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");
 /**
@@ -313,7 +312,7 @@ table {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Trebuchet MS, Verdana, sans;
-  color: #e88e38;
+  color: #074870;
   position: relative;
   line-height: 100%; }
   h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
@@ -393,10 +392,10 @@ blockquote p:before, blockquote p:after, q:before, q:after {
   content: ''; }
 
 a {
-  color: #e88e38;
+  color: #074870;
   text-decoration: none; }
   a:visited {
-    color: #f0b57d; }
+    color: #0c76b8; }
   a:hover {
     text-decoration: underline; }
 
@@ -638,6 +637,15 @@ dl.property-index dd {
   margin-left: 20%;
   margin-bottom: 0.5em; }
 
+.alert {
+  padding: 0.5em;
+  background-color: #f0f0f0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #f7edb8;
+  font-size: larger; }
+
 /*
 	Styling of the main menu
 */
@@ -714,7 +722,7 @@ dl.property-index dd {
 
 .selected {
   font-weight: bolder;
-  color: #e88e38; }
+  color: #074870; }
   .selected:before {
     content: "\25B7\00A0"; }
 
@@ -729,7 +737,32 @@ dl.property-index dd {
 
 .text-inset {
   float: left;
-  margin: 0 0.5em 0 0.5em; }
+  margin: 0 0.5em 0 0.5em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+
+.highlight {
+  padding: 0.5em;
+  background-color: #f0f0f0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px; }
+
+div.letter-icon {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 2px solid #074870;
+  padding: 0.25em;
+  margin: 0 0.25em 0.25em 0;
+  float: left;
+  height: 25px;
+  width: 25px;
+  font-size: 400%;
+  font-weight: bold;
+  vertical-align: baseline;
+  text-align: center; }
 
 			</div>
 	</ul>
