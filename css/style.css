@@ -8,7 +8,6 @@
 <link href="/css/style.css" rel="stylesheet" />
 <title></title>
 
-	
 
 </head>
 
@@ -46,10 +45,11 @@
 <ul class="container12 menu-bar">
 	<li span=8><a class=menu-link href="/"><img class=menu-logo
 			src='/img/EnRouteIcon_CMYK.png'></a> <a
-		href="/chapters/110-introduction.html">Intro </a><a
-		href="/chapters/800-headers.html">Headers </a><a
-		href="/chapters/820-instructions.html">Instructions </a><a
-		href="forum.html">Forum</a>
+		href="/book/100-introduction.html">Intro </a><a
+		href="/book/200-quick-start.html">Quick Start </a><a
+		href="/book/300-overview.html">Overview </a><a
+		href="/links.html">Links </a><a
+		href="/forum.html">Forum</a>
 	<li class=menu-link span=3>
 	<li class=menu-link span=1 style=position:relative>
 		<img src="/img/under-construction.png" class=slidein style="width:100px;position:fixed;top:0px">
@@ -64,6 +64,42 @@
 			<div>
 			<ul class="side-nav">
 	
+		
+			<li><a href="/book/100-introduction.html">Introduction</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start</a>
+	  	
+  	
+		
+			<li><a href="/book/210-workspace-setup.html">Workspace Setup</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-architecture.html">Architecture</a>
+	  	
+  	
+		
+			<li><a href="/book/500-toolchain.html">Toolchain</a>
+	  	
+  	
+		
+			<li><a href="/book/600-best-practices.html">Best Practices</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Links</a>
+	  	
+  	
+		
+			<li><a href="/book/800-profiles.html">Profiles</a>
+	  	
+  	
 </ul>
 
 			</div>
@@ -488,6 +524,9 @@ menu.tabs {
   menu.tabs li[disabled] {
     color: grey; }
 
+img {
+  max-width: 100%; }
+
 img.inset {
   padding-right: 4px;
   padding-bottom: 4px;
@@ -646,6 +685,21 @@ dl.property-index dd {
   background-color: #f7edb8;
   font-size: larger; }
 
+.book img {
+  max-width: 100%;
+  -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: block; }
+
 /*
 	Styling of the main menu
 */
@@ -763,6 +817,13 @@ div.letter-icon {
   font-weight: bold;
   vertical-align: baseline;
   text-align: center; }
+
+img.short-header {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  max-width: 100%;
+  margin-bottom: 0.5em; }
 
 			</div>
 	</ul>
