@@ -47,7 +47,7 @@
 			src='/img/EnRouteIcon_CMYK.png'></a> <a
 		href="/book/100-introduction.html">Intro </a><a
 		href="/book/200-quick-start.html">Quick Start </a><a
-		href="/book/300-overview.html">Overview </a><a
+		href="/book/250-overview.html">Overview </a><a
 		href="/links.html">Links </a><a
 		href="/forum.html">Forum</a>
 	<li class=menu-link span=3>
@@ -73,7 +73,7 @@
 	  	
   	
 		
-			<li><a href="/book/210-workspace-setup.html">Workspace Setup</a>
+			<li><a href="/book/250-overview.html">Overview</a>
 	  	
   	
 		
@@ -847,7 +847,7 @@ img.short-header {
 				<li><a href="">More</a>
 			</ul>
 		<li span=2>
-			<a href="htt[://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
 	</ul>
 </footer>
 

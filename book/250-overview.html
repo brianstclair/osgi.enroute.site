@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
+
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>Overview</title>
+
+
+</head>
+
+
+<body>
+
+	
+		
+	
+		
+	
+		
+			<style>
+				 body {
+					counter-reset: h1 3;
+				}
+			</style>
+				
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+
+	<style>
+.slidein {
+  animation-duration: 3s;
+  animation-name: slidein;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+  	top:-100px;
+  }
+
+  to {
+  	top:0px;
+  }
+}
+@-webkit-keyframes slidein {
+  from {
+  	top:-100px;
+  }
+
+  to {
+  	top:0px;
+  }
+}
+
+</style>
+<ul class="container12 menu-bar">
+	<li span=8><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Intro </a><a
+		href="/book/200-quick-start.html">Quick Start </a><a
+		href="/book/250-overview.html">Overview </a><a
+		href="/links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=3>
+	<li class=menu-link span=1 style=position:relative>
+		<img src="/img/under-construction.png" class=slidein style="width:100px;position:fixed;top:0px">
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Introduction</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start</a>
+	  	
+  	
+		
+			<li class=selected>Overview
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-architecture.html">Architecture</a>
+	  	
+  	
+		
+			<li><a href="/book/500-toolchain.html">Toolchain</a>
+	  	
+  	
+		
+			<li><a href="/book/600-best-practices.html">Best Practices</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Links</a>
+	  	
+  	
+		
+			<li><a href="/book/800-profiles.html">Profiles</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<img class=short-header src="/img/header-short-book.png">
+			<div class='notes-margin book'>
+				<h1> Overview</h1>
+				<p>TBD</p>
+
+<h2 id="why-osgi">Why OSGi?</h2>
+
+<p>… Hello world is not a benchmark</p>
+
+<p><img src="/img/book/ov/babel.jpg" alt="Workflow" /></p>
+
+<p><img src="/img/book/ov/devchain-weight.jpg" alt="Workflow" /></p>
+
+<p><img src="/img/book/ov/devchain-java.jpg" alt="Workflow" /></p>
+
+<ul>
+  <li>µService Oriented Programming</li>
+  <li>To reduce system complexity</li>
+  <li>Dependency Management </li>
+  <li>To reduce errors in development &amp; operations</li>
+  <li>Tooling</li>
+  <li>To reduce time to market</li>
+  <li>Documentation &amp; Training</li>
+  <li>To reduce confusion with developers</li>
+</ul>
+
+<p><img src="/img/book/ov/workflow.jpg" alt="Workflow" /></p>
+
+<h2 id="community">Community</h2>
+
+<h2 id="tutorials">Tutorials</h2>
+
+<h2 id="bnd-the-little-engine-that-built">bnd, the little engine that built</h2>
+
+<p><img src="/img/book/ov/bnd-arch.jpg" alt="Workflow" /></p>
+
+<p><img src="/img/book/ov/bnd-workspace.jpg" alt="Workflow" /></p>
+
+<h2 id="profiles">Profiles</h2>
+
+<p>A profile is specific catalog of specifications that vendors can provide in a distribution.
+An OSGi Profile consists of</p>
+
+<ul>
+  <li>µServices — Specifications of either OSGi Alliance or external µservices.</li>
+  <li>Extenders — An extender provides support functionality to OSGi bundles.</li>
+  <li>Capabilities — A capability describes a feature/function/resource of the underlying system in abstract format.</li>
+</ul>
+
+<p>Each OSGi enRoute Profile is represented by a clean signed JAR library that can be used to build bundles against.  This is a specification only library, it can not introduce unwanted dependencies, or let developers accidentally use proprietary features of a vendor.</p>
+
+<ul>
+  <li>java 1.8 — All profiles are based on Java 1.8</li>
+  <li>base — A minimum profile, mostly as common base and for demonstrations. It provides support for the best practices in our industry.</li>
+  <li>base.debug — Supports developing and debugging</li>
+  <li>web — Web application development optimized for single page web apps.</li>
+  <li>web.debug — Supports developing and debugging web apps.
+persistence — Provides support for JPA on OSGi</li>
+</ul>
+
+<h2 id="bndtools">bndtools</h2>
+
+<h2 id="service-oriented-programming">Service Oriented Programming</h2>
+
+<p><img src="/img/book/ov/services.jpg" alt="Workflow" /></p>
+
+<h2 id="components">Components</h2>
+
+<p><img src="/img/book/ov/components.jpg" alt="Workflow" /></p>
+
+<h2 id="bundles">Bundles</h2>
+
+<p><img src="/img/book/ov/bundles.jpg" alt="Workflow" /></p>
+
+<p><img src="/img/book/ov/bundles-closed.jpg" alt="Workflow" /></p>
+
+<h2 id="jpm4j">jpm4j</h2>
+
+<h2 id="assembling">Assembling</h2>
+
+<p><img src="/img/book/ov/assembly.jpg" alt="Workflow" /></p>
+
+<h2 id="distros">Distros</h2>
+
+<p>A distro provides the runtime environment for one or more profiles The OSGi enRoute project will deliver a reference distribution for all profiles based on open source and OSGi provided bundles. Members and other companies can provide other, competing, interoperable, distributions (And are actively encouraged to do so).</p>
+
+<p>How do we prevent vendor lock-in?</p>
+
+<h2 id="capability-maturity-model">Capability Maturity Model</h2>
+
+<p><img src="/img/book/ov/cap-req-1.jpg" alt="Workflow" /></p>
+
+<p><img src="/img/book/ov/cap-req-2.jpg" alt="Workflow" /></p>
+
+<h2 id="semantic-versioning">Semantic Versioning</h2>
+
+<ul>
+  <li>major – Breaking change for consumers</li>
+  <li>minor – Breaking change for providers</li>
+  <li>micro – Invisible change</li>
+</ul>
+
+<h2 id="baselining">Baselining</h2>
+
+<h2 id="command-line-building">Command Line Building</h2>
+
+<h2 id="source-control-management">Source Control Management</h2>
+
+<h2 id="continuous-integration">Continuous Integration</h2>
+
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href=''></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>

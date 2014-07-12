@@ -74,7 +74,7 @@
 			src='/img/EnRouteIcon_CMYK.png'></a> <a
 		href="/book/100-introduction.html">Intro </a><a
 		href="/book/200-quick-start.html">Quick Start </a><a
-		href="/book/300-overview.html">Overview </a><a
+		href="/book/250-overview.html">Overview </a><a
 		href="/links.html">Links </a><a
 		href="/forum.html">Forum</a>
 	<li class=menu-link span=3>
@@ -100,7 +100,7 @@
 	  	
   	
 		
-			<li><a href="/book/210-workspace-setup.html">Workspace Setup</a>
+			<li><a href="/book/250-overview.html">Overview</a>
 	  	
   	
 		
@@ -135,7 +135,28 @@
 			<img class=short-header src="/img/header-short-book.png">
 			<div class='notes-margin book'>
 				<h1> Profiles</h1>
-				
+				<h2 id="base-profile">Base Profile</h2>
+
+<ul>
+  <li>OSGi Core Framework — R6</li>
+  <li>OSGi Compendium  — ConfigurationAdmin, Coordinator, EventAdmin, LogService, MetaTypeService,UserAdmin</li>
+  <li>Logging — Extensive Java Logging and SLF4J (dynamic!) logging support. Both service based an statics.</li>
+  <li>OSGi enRoute Support</li>
+  <li>Requirements and Capabilities — Completely developed with the R&amp;C model in mind</li>
+  <li>Specifications in code — Extensive support to use Java classes and interfaces to also specifies non-Java aspects. E.g. license headers, forms, versioning, etc. Mostly through annotations.</li>
+  <li>OSGi enRoute services
+    <ul>
+      <li>Authenticator and Authority — For extensible security</li>
+      <li>ConfigurationDone — To signal end of initialization at startup</li>
+      <li>DTOs — Extensive support for Data Transfer Objects (JSON, conversion, diffing, named access)</li>
+      <li>Launched — Provides access to startup parameters</li>
+      <li>LoggerAdmin — Administrative front end to logging. Can handle OSGi, SLF4J, and Java Logging</li>
+      <li>java.util.Timer — Scheduled tasks</li>
+      <li>java.util.concurrent.Executor — Background tasks</li>
+    </ul>
+  </li>
+</ul>
+
 
 			</div>
 	</ul>
@@ -159,7 +180,7 @@
 				<li><a href="">More</a>
 			</ul>
 		<li span=2>
-			<a href="htt[://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
 	</ul>
 </footer>
 
