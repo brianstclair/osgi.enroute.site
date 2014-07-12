@@ -183,7 +183,7 @@
 <p>We are going to use the OSGi enRoute archetype workspace, which is a <a href="https://github.com/osgi/osgi.enroute.archetype">Github repository</a>. We need to import this archetype so select <code>File/Import/Projects from Git/Clone URI</code>. The URI that we should use is</p>
 
 <blockquote>
-  <p><code>git@github.com:osgi/osgi.enroute.archetype.git</code></p>
+  <p><code>git@github.com:osgi/scm.git</code></p>
 </blockquote>
 
 <p>This will give us:</p>
@@ -197,6 +197,8 @@
 <p>On the next page we must define how to import the projects. A bnd workspace contains potentially many projects so the default option is ok, <code>Import existing projects</code>, so you can click <code>Next</code> and <code>Finish</code>. This will give you a Package Explorer with a single project <code>cnf</code>. </p>
 
 <p>Congratulations, you’ve created your first workspace!</p>
+
+<p>TODO Please restart your workspace, there is a bug in bndtools that sometimes causes projects to be put in the wrong place if you don’t restart.</p>
 
 <h3 id="about-the-workspace">About the Workspace</h3>
 
@@ -280,33 +282,36 @@
 
 <pre><code>@Component(name = "com.acme.prime.hello")
 public class HelloImpl extends Thread {
-	final static Logger log = LoggerFactory.getLogger(HelloImpl.class);
+  final static Logger log = 
+    LoggerFactory.getLogger(HelloImpl.class);
 
-	@Activate
-	void activate() {
-		System.out.println("Hello World");
-		start();
-	}
+  @Activate
+  void activate() {
+    System.out.println("Hello World");
+    start();
+  }
 
-	@Deactivate
-	void deactivate() {
-		System.out.println("Goodbye World");
-		interrupt();
-	}
+  @Deactivate
+  void deactivate() {
+    System.out.println("Goodbye World");
+    interrupt();
+  }
 
-	public void run() {
-		try {
-			ConsoleReader r = new ConsoleReader();
-			String line;
-			while ( !isInterrupted() &amp;&amp; (line=r.readLine("&gt; "))!=null) {
-				if ( "quit".equals(line))
-					FrameworkUtil.getBundle(HelloImpl.class).stop();
-				System.out.println(line.toUpperCase());
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}	
-	}
+  public void run() {
+    try {
+      ConsoleReader r = new ConsoleReader();
+	  String line;
+	  while ( !isInterrupted() 
+	    &amp;&amp; (line=r.readLine("&gt; "))!=null) {
+        if ( "quit".equals(line))
+          FrameworkUtil.getBundle(
+            HelloImpl.class).stop();
+        System.out.println(line.toUpperCase());
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }	
+  }
 }
 </code></pre>
 
@@ -328,21 +333,24 @@ public class HelloImpl extends Thread {
 
 <p><img src="/img/book/qs/jline.jpg" alt="Resolve tab" /></p>
 
-<p>At the right side of the entries you will see version vignettes. If you drag a version vignette to the build tab and drop it on the Build path control then you get the following pop up:</p>
+<p>At the right side of the entries you will see version vignettes. If you drag a version vignette to the <code>Build</code> tab and drop it on the <code>Build path</code> control then you get the following pop up:</p>
 
 <p><img src="/img/book/qs/depsfromjpm.jpg" alt="Resolve tab" /></p>
 
-<p>Click finish and save the <code>bnd.bnd</code> file. Goto the HelloImpl class and fix the imports. This should get rid of any compile errors. However, we now get a warning from the console that there are unresolved bundles. This makes sense because we added a dependency to JLine but we do not have it running as a bundle.</p>
+<p>Click finish and save the <code>bnd.bnd</code> file. Goto the <code>HelloImpl class</code> and fix the imports. This should get rid of any compile errors. However, we now get a warning from the console that there are unresolved bundles. This makes sense because we added a dependency to JLine but we do not have it running as a bundle.</p>
 
-<p>So double click the <code>hello.bndrun</code> file and click on the <code>Resolve</code> button, the save the file. If things were done in the right order then you should see the <code>Hello World</code> again and the prompt. Type a few words, which are echoed in upper case, and then type <code>quit</code> with a return. You should now also see the <code>Goodbye World</code> because we just made the bundle commit suicide (which is not a good practice, also not in OSGi).</p>
+<h2 id="updating-the-bndrun-file">Updating the Bndrun file</h2>
+
+<p>So double click the <code>hello.bndrun</code> file and click on the <code>Resolve</code> button, the make it re-look at the dependency situation. The JLine bundle should now be added to the result. <code>Finish</code>, and save the <code>hello.bndrun</code> file.</p>
+
+<p>If things were done in the right order then you should see the <code>Hello World</code> again and the prompt. Type a few words, which are echoed in upper case, and then type <code>quit</code> with a return. You should now also see the <code>Goodbye World</code> because we just made the bundle commit suicide (which is not a good practice, also not in OSGi).</p>
 
 <p>There is a small chance that you did something different and that the you do not get the prompt. In that case, terminate the running process, goto the Run tab on the <code>hello.bndrun</code> file, and click <code>Run OSGi</code> again. If this does not resolve the issue, try the next step since this will add some debugging.</p>
 
 <p>Otherwise, you can try the <a href="/forum.html">Forum</a>.</p>
 
-<p>Caveat: This is still early days for enRoute, so feedback appreciated.</p>
-
 <h2 id="debugging">Debugging</h2>
+
 <p>Of course OSGi enRoute will never let you down, you’re live will be tranquil, and you can spend lots of time on the beach. Ehh, well we try but Watson is not that advanced yet and in the mean time you will have to do some debugging and diagnosing to make actual applications work.</p>
 
 <p>One of the great tools is the Apache Felix Web Console, especially with Xray. So double click the <code>hello.bndrun</code> file and add the <code>aQute.xray.plugin</code> to the <code>Run Requirements</code> control</p>
@@ -350,6 +358,8 @@ public class HelloImpl extends Thread {
 <p>TODO There is a bug in Jetty, so for now you have to also add org.apache.felix.eventadmin to the initial requirements, this should in general not be necessary.</p>
 
 <p>Then hit <code>Resolve</code>. This will add a web server, Apache Felix Web Console, and XRay. Save the file, and then go to  <a href="http://localhost:8080/system/console/xray">http://localhost:8080/system/console/xray</a>. The user id password is, surprisingly innovative, <code>admin</code> and <code>admin</code>. The Apache Felix Web Console is an amazing tool, learn to use it.</p>
+
+<p>BTW, if the provider bundle is grey, push the <code>Start All</code> button at the top of XRay.</p>
 
 <p><img src="/img/book/qs/xray.jpg" alt="Resolve tab" /></p>
 
@@ -359,9 +369,9 @@ public class HelloImpl extends Thread {
 
 <p>Since we are going to start the application outside Eclipse, now is a good time to kill the launched framework. </p>
 
-<p>Next step is the infamous command line shell. </p>
+<p>Next step is using the infamous command line shell that we all hate but could not live without:</p>
 
-<pre><code>$ cd /Ws/com.acme.prime/com.acme.prime.hello.provider
+<pre><code>$ cd /Ws/com.acme.prime/scm/com.acme.prime.hello.provider
 $ java -jar hello.jar
 Hello World
 &gt; quit
@@ -375,9 +385,11 @@ QUIT
 
 <h2 id="building-outside-the-ide">Building Outside the IDE</h2>
 
-<p>If you can’t automatically build it then it is not software engineering. Automating repeated processes is at the heart of building software. It is that OSGi enRoute/bnd includes a full gradle build that does not require any extra work. The raison d’être of bnd is that it runs inside an IDE like Eclipse but can also run from a shell. So we only have to fire up a shell and run the build.</p>
+<p>If you can’t automatically build it then it is not software engineering. Automating repeated processes is at the heart of building software. It is that OSGi enRoute/bnd includes a full gradle build that does not require any extra work. The raison d’être of bnd is that it runs inside an IDE like Eclipse but can also run from a shell. Great care has been taken to ensure that bnd builds identical artifacts inside the IDE and from the command line. </p>
 
-<p>There is a script included, <code>gradlew</code>, that will download the correct gradle version. You can also install gradle (&gt; 1.12) and use it. It should go without saying, but you should also have java 8 installed on the command line.</p>
+<p>So we only have to fire up a shell and run the build.</p>
+
+<p>There is a script included, <code>gradlew</code>, that will download the correct gradle version. You can also install gradle (&gt;= 1.12) and use it. It should go without saying, but you should also have java 8 installed on the command line.</p>
 
 <pre><code>$ cd /Ws/com.acme.prime
 $ java -version
@@ -428,7 +440,7 @@ BUILD SUCCESSFUL
 
 <p>This URL will of course differ for you. Now, in bndtools we must connect our bnd workspace to this repository. This can all be done from inside Eclipse.</p>
 
-<p>In the Package Explorer, select all the projects and the select on the context menu <code>Team/Disconnect</code>. We could reconnect this repository to our own new repository but since we do not want to inherit this unrelated history we need to delete it. </p>
+<p>In the Package Explorer, select all the projects and the select on the context menu <code>@/Team/Disconnect</code>. We could reconnect this repository to our own new repository but since we do not want to inherit this unrelated history we need to delete it. </p>
 
 <p>In a perfect world we would reconnect the git repository from inside Eclipse. However, EGit is not up to the level of the CVS plugin in Eclipse and this turned to be quite cumbersome.</p>
 
@@ -440,7 +452,7 @@ BUILD SUCCESSFUL
 $ rm -rf scm/.git
 </code></pre>
 
-<p>Then we basically do what Github told us to do …</p>
+<p>Then we basically do what Github told us to do on the start page …</p>
 
 <pre><code>$ git init
 $ git add .
@@ -449,7 +461,7 @@ $ git remote add origin git@github.com:osgi/com.acme.prime.git
 $ git push -u origin master
 </code></pre>
 
-<p>Sometimes command line interfaces are hard to beat … If you go to <a href="http://github.com">Github</a> then you should be able to see your workshop.</p>
+<p>Sometimes command line interfaces are hard to beat … If you go to <a href="http://github.com">Github</a> then you should be able to see your workspace now.</p>
 
 <h2 id="continuous-integration">Continuous Integration</h2>
 
@@ -462,6 +474,8 @@ $ git push -u origin master
 <h3 id="conclusion">Conclusion</h3>
 
 <p>In this mini-tutorial we’ve covered a lot of ground. </p>
+
+<p>TBD</p>
 
 
 			</div>
