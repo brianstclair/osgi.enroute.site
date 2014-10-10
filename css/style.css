@@ -14,45 +14,15 @@
 
 <body>
 
-	<style>
-.slidein {
-  animation-duration: 3s;
-  animation-name: slidein;
-  -webkit-animation-duration: 3s;
-  -webkit-animation-name: slidein;
-}
-
-@keyframes slidein {
-  from {
-  	top:-100px;
-  }
-
-  to {
-  	top:0px;
-  }
-}
-@-webkit-keyframes slidein {
-  from {
-  	top:-100px;
-  }
-
-  to {
-  	top:0px;
-  }
-}
-
-</style>
-<ul class="container12 menu-bar">
-	<li span=8><a class=menu-link href="/"><img class=menu-logo
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
 			src='/img/EnRouteIcon_CMYK.png'></a> <a
-		href="/book/100-introduction.html">Intro </a><a
-		href="/book/200-quick-start.html">Quick Start </a><a
-		href="/book/250-overview.html">Overview </a><a
-		href="/links.html">Links </a><a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
 		href="/forum.html">Forum</a>
-	<li class=menu-link span=3>
-	<li class=menu-link span=1 style=position:relative>
-		<img src="/img/under-construction.png" class=slidein style="width:100px;position:fixed;top:0px">
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><b>BETA</b>
 	
 </ul>
 
@@ -65,15 +35,23 @@
 			<ul class="side-nav">
 	
 		
-			<li><a href="/book/100-introduction.html">Introduction</a>
+			<li><a href="/book/100-introduction.html">Guide</a>
 	  	
   	
 		
-			<li><a href="/book/200-quick-start.html">Quick Start</a>
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
 	  	
   	
 		
-			<li><a href="/book/250-overview.html">Overview</a>
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
 	  	
   	
 		
@@ -81,23 +59,11 @@
 	  	
   	
 		
-			<li><a href="/book/400-architecture.html">Architecture</a>
+			<li><a href="/book/400-services.html">Service Catalog</a>
 	  	
   	
 		
-			<li><a href="/book/500-toolchain.html">Toolchain</a>
-	  	
-  	
-		
-			<li><a href="/book/600-best-practices.html">Best Practices</a>
-	  	
-  	
-		
-			<li><a href="/book/700-links.html">Links</a>
-	  	
-  	
-		
-			<li><a href="/book/800-profiles.html">Profiles</a>
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
 	  	
   	
 </ul>
@@ -371,7 +337,8 @@ h2 {
   counter-reset: h3 0; }
 
 h3 {
-  font-size: 1.3em;
+  font-size: 1.2em;
+  font-weight: normal;
   counter-increment: h3 1; }
 
 h4 {
@@ -824,6 +791,61 @@ img.short-header {
   border-radius: 5px;
   max-width: 100%;
   margin-bottom: 0.5em; }
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes enlarge {
+  from {
+    width: 50%; }
+
+  to {
+    width: 100%; } }
+/* Standard syntax */
+@keyframes enlarge {
+  from {
+    width: 50%; }
+
+  to {
+    width: 100%; } }
+.tutorial-content img {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  margin-bottom: 1em; }
+
+/*
+ * Next and Previous navigation
+ */
+.nav-prev {
+  float: left; }
+  .nav-prev:before {
+    content: "\25C0\00A0"; }
+
+.nav-next {
+  float: right; }
+  .nav-next:after {
+    content: "\00A0\25B6"; }
+
+p.bug {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #FFF0F0;
+  padding: 0.5em;
+  margin: 0.5em 0 0.5em 0;
+  border: solid 1px #FFE0E0; }
+  p.bug:before {
+    font-weight: bold;
+    content: "BUG: "; }
+
+pre.shell {
+  color: white;
+  background-color: black; }
 
 			</div>
 	</ul>

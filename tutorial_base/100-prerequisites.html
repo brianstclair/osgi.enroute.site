@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
+
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>Prerequisites</title>
+
+
+</head>
+
+
+<body>
+
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><b>BETA</b>
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Guide</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-services.html">Service Catalog</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<div>
+				<a class=nav-prev href="/book/200-quick-start.html" >Prev</a>
+				<a class=nav-next href="200-workspace.html" >Next</a> 
+				<br/>
+				<hr/>
+				<h1> Prerequisites</h1>
+				<div class=tutorial-content>
+				<p>Before you start any of the tutorials you must prepare your environment so that the right tools are installed. This page helps you to achieve this. We need to run the following tools on your computer:</p>
+
+<ul>
+  <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Java 8</a>, probably already got it? If not, this is a good time to get started!</li>
+  <li><a href="https://www.eclipse.org/downloads/">Eclipse Luna</a>, if you do not know which variant, pick the <em>Eclipse Standard</em> variant, make sure it has EGit included.</li>
+  <li><a href="http://git-scm.com/book/en/Getting-Started-Installing-Git">Git</a>, unfortunately the built-in EGit in Eclipse needs some good old command line help</li>
+</ul>
+
+<h2 id="installing-bndtools">Installing bndtools</h2>
+
+<p>In general you should install the bndtools from either the Eclipse Marketplace or, if you’re a bit more adventurous, from the Milestone update. However, since this site is in beta, it is best to install the continuous build version. Once we’re out of beta, we will make sure there is always a good version in the market place. The URL for the continuous build is:</p>
+
+<pre><code>https://bndtools.ci.cloudbees.com/job/bndtools.master/lastSuccessfulBuild/artifact/build/generated/p2/
+</code></pre>
+
+<p>You can find the details how to install bndtools on the bndtools website:</p>
+
+<pre><code>http://bndtools.org/installation.html#update-site
+</code></pre>
+
+<h2 id="conventions">Conventions</h2>
+
+<p>Whenever you see a text like <code>File/Open</code> we hope you treat it as a menu path. That is, go to the menu bar, click on <code>File</code>, then select <code>Open</code>. If the menu path starts with @/ then it is from the context menu on the selected object, which has then been clearly defined in the previous sentence. </p>
+
+<h2 id="os-specific-issues">OS Specific Issues</h2>
+
+<p>Since this part is rather sensitive to the operating system you’re using, we have split it in different sections for each of the major operating systems. </p>
+
+<ul>
+  <li><a href="#Windows">Windows</a></li>
+  <li><a href="#MacOS">MacOS</a></li>
+  <li><a href="#Unix">*nix</a></li>
+</ul>
+
+<h3 id="windows">Windows</h3>
+
+<p>In the enRoute tutorials file paths are always indicated using the forward slash or solidus (‘/’) as is customary on *nix like systems. The reason is that bnd, since its files are portable, always uses relative addressing from the workspace and adopted the forward slash. For most developers mapping these paths to Windows should be straightforward.</p>
+
+<p>The only addressing outside the workspace is to the user’s home directory, the user’s home directory is indicated by a path that starts with a tilde and a slash (‘~/’). This maps to the path indicated in Java’s <code>user.home</code> System property.  </p>
+
+<p>Make sure you have a good command line shell available. If you’re familiar with one, keep it. If command lines are uncomfortable for you, you might want to use <a href="http://msysgit.github.io">Git for Windows</a> which includes a bash like shell. Though virtually all work in OSGi enRoute is done through Eclipse, there are some crucial elements where the shell is just much nicer.  </p>
+
+<h3 id="macos">MacOS</h3>
+
+<p>If you start using enRoute you will likely create a number of workspaces. There is a very handy utility plugin for Eclipse on MacOS that shows you which workspace is which icon in the task bar:</p>
+
+<blockquote>
+  <p><a href="http://njbartlett.name/2011/10/09/workspace-mac-badge.html">http://njbartlett.name/2011/10/09/workspace-mac-badge.html</a></p>
+</blockquote>
+
+<h3 id="unix">Unix</h3>
+
+<p>There is a bug in Eclipse concerning the browser support in Linux. It may be necessary to configure an external browser in the Eclipse’s Preferences for <code>bndtools/JPM</code>. </p>
+
+
+				</div>
+				<hr/>
+				<a class=nav-prev href="/book/200-quick-start.html" >Prev</a>
+				<a class=nav-next href="200-workspace.html" >Next</a> 
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href='200-workspace.html'></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="/css/style.css" rel="stylesheet" />
-<title>Quick Start Tutorial</title>
+<title>Base Tutorial</title>
 
 
 </head>
@@ -18,18 +18,18 @@
 		
 	
 		
+	
+		
+	
+		
+	
+		
 			<style>
 				 body {
-					counter-reset: h1 2;
+					counter-reset: h1 5;
 				}
 			</style>
 				
-		
-	
-		
-	
-		
-	
 		
 	
 		
@@ -64,7 +64,7 @@
 	  	
   	
 		
-			<li class=selected>Quick Start Tutorial
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
 	  	
   	
 		
@@ -76,7 +76,7 @@
 	  	
   	
 		
-			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+			<li class=selected>Base Tutorial
 	  	
   	
 		
@@ -98,7 +98,7 @@
 		<li span=9>
 			<img class=short-header src="/img/header-short-book.png">
 			<div class='notes-margin book'>
-				<h1> Quick Start Tutorial</h1>
+				<h1> Base Tutorial</h1>
 				<p>In this quick start we develop a little project that, surprise, surprise,  prints out “Hello world”, and because it is OSGi based, we will also cover the “Goodbye World”. </p>
 
 <p>This tutorial is light on the explanations because it focuses on introducing the overall architecture of enRoute, not the details. Over time this site will be filled with tutorials and documentation (or references to those) that will explain the minute details. This however, is about some big steps.</p>
@@ -114,9 +114,17 @@
 <div>
 <ol>
 
-<li><a href="/qs/100-prerequisites.html">Prerequisites</a> – The prerequisites for the use of OSGi enRoute</li>
-<li><a href="/qs/200-workspace.html">The Workspace</a> – Setup a bnd(tools) workspace</li>
-<li><a href="/qs/300-application.html">Creating an Application</a> – Creating a sample enRoute Application</li>
+<li><a href="/tutorial_base/100-prerequisites.html">Prerequisites</a> – The prerequisites for the use of OSGi enRoute</li>
+<li><a href="/tutorial_base/200-workspace.html">The Workspace</a> – Create and manage a bnd workspace</li>
+<li><a href="/tutorial_base/300-api.html">API Project</a> – How to work with bnd projects properly, API based design.</li>
+<li><a href="/tutorial_base/320-provider.html">Provider Project</a> – Create a project that provides an implementation of the Eval service.</li>
+<li><a href="/tutorial_base/340-junit.html">Testing the Provider with (Standard) JUnit</a> – Test the Provider project with a standard (non-OSGi) JUnit test</li>
+<li><a href="/tutorial_base/400-run.html">Running Your Code</a> – How to run your code in a framework</li>
+<li><a href="/tutorial_base/450-debug.html">Debugging</a> – How to debug a running framework</li>
+<li><a href="/tutorial_base/500-dependencies.html">Dependencies</a> – Handling external dependencies (or where is Maven Central)</li>
+<li><a href="/tutorial_base/600-testing.html">Testing in OSGi</a> – Executing JUnit tests in a running OSGi framework</li>
+<li><a href="/tutorial_base/700-deploy.html">Creating an Application</a> – Creating a sample application and deploying it.</li>
+<li><a href="/tutorial_base/800-ci.html">Continuous Integration</a> – How to setup a Git project and run a Continuous Integration server</li>
 
 
 </ol>
@@ -128,11 +136,7 @@
 
 <p>Well, first, since we’re still in beta, we’d love feedback. Our most favorite feedback is a pull request on the documentation. As an early user you must have run into some rough edges, outright stupidities, or you had a brilliant idea. Just go to the <a href="https://github.com/osgi/osgi.enroute/tree/master/osgi.enroute.doc">OSGi enRoute</a> repository on Github. Clone it in your own account, make your changes or additions, and send a pull request. We, and others like you, highly appreciate these kind of contributions.</p>
 
-<p>This tutorial is only a quick start, we’ve not explained a lot and just tried to get you on a starting level as soon as possible. To get more background, we highly recommend doing the <a href="220-tutorial-base.html">Base Tutorial</a>. This tutorial follows the same route but shows how to design with service, the corner stone of OSGi enRoute.</p>
-
-<p>You then might want to read the <a href="215-sos.html">Service Oriented Systems</a> chapter how to build Service Oriented Systems.</p>
-
-<p>However, running into real problems is the best way to learn a technology. If you run into problems, use the <a href="/forum.html">Forum</a> to ask questions and get answers.</p>
+<p>After you’ve done this tutorial you should have a basic feeling of how to build an application with  OSGi enRoute. So the best way to continue learning is to build a small application based on these principles. Running into real problems is the best way to learn a technology. If you run into problems, use the <a href="/forum.html">Forum</a> to ask questions and get answers.</p>
 
 <p>And watch this space, we will expand this site with hundreds data sheets of services you can find on the net. These data-sheets will show you how to use this service in your application with real examples. </p>
 

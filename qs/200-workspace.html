@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
+
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>The Workspace</title>
+
+
+</head>
+
+
+<body>
+
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><b>BETA</b>
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Guide</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-services.html">Service Catalog</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<div>
+				<a class=nav-prev href="100-prerequisites.html" >Prev</a>
+				<a class=nav-next href="300-application.html" >Next</a> 
+				<br/>
+				<hr/>
+				<h1> The Workspace</h1>
+				<div class=tutorial-content>
+				<h2 id="what-you-will-learn-in-this-section">What you will learn in this section</h2>
+<p>We will setup a bnd(tools) workspace for enRoute so we can build an application in the next section.</p>
+
+<p>Before you start this section, make sure you’ve checked the <a href="100-prerequisites.html">prerequisites</a> for enRoute on your platform. </p>
+
+<h2 id="the-workspace">The Workspace</h2>
+
+<p>A workspace is a directory that has a specific layout so that bnd(tools) knows how to treat your projects. Since we will work in Eclipse we actually have 2 workspaces. The Eclipse workspace is a directory where Eclipse keeps its metadata and we keep that separated from the bnd(tools) workspace.</p>
+
+<p>Since a bnd workspace for enRoute has some specific setup, we clone the workspace from a Github project, <a href="https://github.com/osgi/workspace">osgi/workspace</a>. </p>
+
+<p>So start an Eclipse Luna session and select a workspace. For our tutorials in OSGi enRoute we use the com.acme.prime workspace name, which is also the directory name. Let’s place this test workspace in our home directory at <code>~/eclipse/com.acme.prime</code>.</p>
+
+<p>Select <code>File/Switch Workspace/Other ...</code>. This gives you the following dialog:</p>
+
+<p><img src="/img/qs/qs-switch-0.png" alt="Switch Workspace" /></p>
+
+<p>After filling in the proper path and then closing the dialog by clicking <code>OK</code>, we get an Eclipse restart and should finally get:</p>
+
+<p><img src="/img/qs/qs-switch-1.png" alt="Start Screen" /></p>
+
+<h3 id="import-the-archetype-workspace">Import the Archetype Workspace</h3>
+
+<p>We can ignore the welcome screen. The next step is to link this Eclipse workspace to a bnd workspace. We therefore need to clone the <a href="https://github.com/osgi/workspace">osgi/workspace</a>. This process uses EGit, it is a tad cumbersome, quite a few steps.</p>
+
+<p>Select <code>File/Import</code>. </p>
+
+<p><img src="/img/qs/git-import-0.png" alt="Import archetype" /></p>
+
+<p>Then select the <code>Projects from Git</code>. </p>
+
+<p><img src="/img/qs/git-import-1.png" alt="Import archetype" /></p>
+
+<p>If you click <code>Next</code> you should be see the following:</p>
+
+<p><img src="/img/qs/git-import-2.png" alt="Import archetype" /></p>
+
+<p>Select <code>Clone URI</code>, then <code>Next</code>, which gives us the window where we should enter the URI to the repository. </p>
+
+<p><img src="/img/qs/git-import-3.png" alt="Import archetype" /></p>
+
+<p>You should then enter the URI; the URI that we should use is</p>
+
+<blockquote>
+  <p><code>https://github.com/osgi/workspace.git</code></p>
+</blockquote>
+
+<p>Select <code>Next</code> and then select the <code>master</code> branch.</p>
+
+<p><img src="/img/qs/git-import-4.png" alt="Import archetype" /></p>
+
+<p>Then select <code>Next</code> to go to the page where we will tell EGit to store our Git/bnd workspace in your file system.</p>
+
+<p><img src="/img/qs/git-import-5.png" alt="Import archetype" /></p>
+
+<p>By default Git places the projects in a sub directory <code>git</code> of your home directory (<code>~/git/...</code>). (This is an Eclipse preference.) We will follow this rather sane convention. However, the default name of the workspace is ‘workspace’ so we want to rename this to <code>com.acme.prime</code>.</p>
+
+<p>So click <code>Next</code>, which will bring us to a page asking us if we should import the projects in this workspace. A resounding yes! (Even if there is only a single <code>cnf</code> project.)</p>
+
+<p><img src="/img/qs/git-import-6.png" alt="Import archetype" /></p>
+
+<p>When you click <code>Next</code> you get on a bit deja vu page but there is probably some reason we don’t get.</p>
+
+<p><img src="/img/qs/git-import-7.png" alt="Import archetype" /></p>
+
+<p>So just click <code>Finish</code>. Which should give you a fresh new workspace, only beaten by the smell of freshly baked bread!</p>
+
+<p><img src="/img/qs/git-import-8.png" alt="Import archetype" /></p>
+
+<p>We’ve now created a workspace that will allow us to play with enRoute. Maybe a bit cumbersome with all the EGit steps but once you’ve mastered it is quite fast since most pages are just clicking <code>Next</code> to accept the defaults.</p>
+
+<p class="bug">You have to restart Eclipse since there is a small chance that Eclipse will by default place new projects in the Eclipse workspace and not, as is absolutely required, in the Git/bnd workspace.</p>
+
+<p>Now, select the <code>Bndtools</code> perspective with `Window/Open Perspective …/Other …’. This opens a selection dialog:</p>
+
+<p><img src="/img/qs/workspace-bndtools-0.png" alt="Perspective Selection Dialog" /></p>
+
+<p>Selecting <code>Bndtools</code> and clicking <code>OK</code> ensures that you are in the proper perspective. Your Eclipse should look similar to:</p>
+
+<p><img src="/img/qs/workspace-bndtools-1.png" alt="Perspective Selection Dialog" /></p>
+
+<h3 id="file-system">File System</h3>
+
+<p>Since we made changes to your file system, a short summary of where we placed what.</p>
+
+<p>The Eclipse workspace was placed in a special place for Eclipse workspaces, the <code>~/eclipse</code> directory. We named this workspace <code>com.acme.prime</code>, which is a good name. The bnd workspace was placed also in your home directory, in the <code>~/git</code> directory, also under the name <code>com.acme.prime</code>; keeping the related Eclipse and Git/bnd workspace named identical is a a good practice.</p>
+
+<pre><code>~/
+	git/
+		com.acme.prime/
+			cnf/
+				ext/
+				build.bnd
+				...
+	eclipse/
+		com.acme.prime/
+			.metadata/
+				...
+</code></pre>
+
+<h2 id="next">Next</h2>
+
+<p>In the next section of this quick start tutorial we will create a sample application. </p>
+
+				</div>
+				<hr/>
+				<a class=nav-prev href="100-prerequisites.html" >Prev</a>
+				<a class=nav-next href="300-application.html" >Next</a> 
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href='300-application.html'></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>

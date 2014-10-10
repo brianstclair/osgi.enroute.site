@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
+
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>Provider Project</title>
+
+
+</head>
+
+
+<body>
+
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><b>BETA</b>
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Guide</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-services.html">Service Catalog</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<div>
+				<a class=nav-prev href="300-api.html" >Prev</a>
+				<a class=nav-next href="340-junit.html" >Next</a> 
+				<br/>
+				<hr/>
+				<h1> Provider Project</h1>
+				<div class=tutorial-content>
+				<h2 id="what-you-will-learn-in-this-section">What you will learn in this section</h2>
+
+<p>In this section we create another project that provides an implementation for our Eval API, a so called <em>provider</em>. We will then write some JUnit test cases to test we implemented the evaluator correctly.</p>
+
+<h2 id="create-a-provider-project">Create a Provider Project</h2>
+
+<p>In the previous section we created an API for an expression evaluator. We now need a so called <em>provider</em> for this service. A provider is responsible for the contract defined in the API so that <em>consumers</em> can use the service. In the case of the Eval service the consumer will call the <code>eval(String)</code> method and the provider must implement it. In the previous section we also learned that the last segment in the project name defines its <em>type</em>; this is supported by OSGi enRoute templates. A provider project must therefore have a name that ends in <code>.provider</code>. We also like to start the project name with the workspace, the service API name and an indication of what kind of implementation this is. Well, this is going to be an awful simple implementation, so the name should be:</p>
+
+<pre><code>com.acme.prime.eval.provider
+</code></pre>
+
+<p>So let’s create a new project with this name. <code>New/Bndtools OSGi Project</code>. Enter the new (<code>com.acme.prime.eval.provider</code>), select the OSGi enRoute templates, and follow the defaults.</p>
+
+<p><img src="/img/tutorial_base/provider-create-0.png" alt="Provider Project" /></p>
+
+<h2 id="implementation">Implementation</h2>
+
+<p>Our friendly OSGi enRoute template already has created a <code>EvalImpl.java</code> class for us. This is already setup as a Declarative Service (DS) µservice component because the <code>@Component</code> annotation was added. If your component class implements one or more interfaces, then these will be registered as OSGi services. So in this case, we want to implement an <code>Eval</code> interface so that we’re registered as an Eval service. So the first thing we should do is add this <code>Eval</code> interface to the class:</p>
+
+<pre><code>@Component(name = "com.acme.prime.eval")
+public class EvalImpl implements Eval { }
+</code></pre>
+
+<h2 id="build-path">Build Path</h2>
+
+<p>Unfortunately, this causes an error; Eclipse cannot find the <code>Eval</code> class because we’re not linked to the <code>com.acme.prime.eval.api</code> project yet. Hold your temptation to add this to the Eclipse Build Path because this will then fail later in the continuous integration where there is no Eclipse. Nope, we must add the dependency to bnd to get fidelity between our user friendly Eclipse world and the software engineering world of continuous integration. </p>
+
+<p>The dependencies of bnd are defined in the <code>bnd.bnd</code> file. We can control the build path through the build path editor. Double click on the <code>bnd.bnd</code> file and select the <code>Build</code> tab.</p>
+
+<p><img src="/img/tutorial_base/provider-create-1.png" alt="Build Tab" /></p>
+
+<p>This tab does not only show you the bnd errors, it also shows you the current build path (OSGi enRoute API, JUnit, etc). To add the API project, click on the green plus (‘+’) just above the list. This pops up a list of all the <em>repositories</em>. As you can see, the top repository is the workspace and contains our API project. </p>
+
+<p><img src="/img/tutorial_base/provider-create-2.png" alt="Adding to the Build Path" /></p>
+
+<p>You can type text in the search box to filter the list. Double click the <code>com.acme.prime.eval.provider.api</code> project and click in <code>Finish</code>. Save the <code>bnd.bnd</code> file because otherwise there is no effect.</p>
+
+<p>You can now go back to the <code>EvalImpl</code> class and import the <code>Eval</code> interface. Just select the <code>Eval</code> name (which is red underlined) and click <code>Control-1</code>. You then click on Command-1, and select  <code>Import 'Eval' (com.acme.prime.eval.api)</code>. This will take care of the import. Don’t forget to save!</p>
+
+<p>Bugger, still errors!</p>
+
+<h2 id="code">Code</h2>
+
+<p>Alas, we got rid of the import error but in place of this error we now get a red underlined <code>EvalImpl</code> class. The problem is that we need to provide the <code>eval</code> method as prescribed by the Eval interface that it now implements. Let’s keep it simple:</p>
+
+<pre><code>@Component(name = "com.acme.prime.eval")
+public class EvalImpl implements Eval {
+	Pattern EXPR = Pattern.compile( "\\s*(?&lt;left&gt;\\d+)\\s*(?&lt;op&gt;\\+|-)\\s*(?&lt;right&gt;\\d+)\\s*");
+	
+	@Override
+	public double eval(String expression) throws Exception {
+		Matcher m = EXPR.matcher(expression);
+		if ( !m.matches())
+			throw new IllegalArgumentException("Invalid expression " + expression);
+		
+		double left = Double.valueOf( m.group("left"));
+		double right = Double.valueOf( m.group("right"));
+		switch( m.group("op")) {
+		case "+": return left + right;
+		case "-": return left - right;
+		}
+		return Double.NaN;
+	}
+}
+</code></pre>
+
+<p>Ok, ok, simple might still give it too much credit but we’re not here to learn parsing. At least it has (some) error handling! Notice that we can only handle trivial additions and subtractions of constants.</p>
+
+<h2 id="imports">Imports</h2>
+
+<p>It is about time now to take a look at how our module (bundle) really looks like. Let’s double click on <code>bnd.bnd</code> and select the <code>Contents</code> tab. This tab shows us how the bundle is layed out:</p>
+
+<ul>
+  <li>Private packages – Packages that are only available inside the bundle. Another bundle could have the same name for the package but different contents.</li>
+  <li>Exported packages – Packages that we provide to other bundles and which we are supposed to maintain over time.</li>
+  <li>Imported packages – Packages we expect someone else to export, hoping that they are as good as we will be in maintaining that package over time.</li>
+</ul>
+
+<p><img src="/img/tutorial_base/provider-imports-0.png" alt="Contents" /></p>
+
+<p>If we translate this to a picture with the standard OSGi notation it looks as follows:</p>
+
+<p><img src="/img/tutorial_base/provider-imports-1.png" alt="Bundle Layout" /></p>
+
+<p>We can see that our simple bundle is importing the <code>com.acme.prime.eval.api</code> package to get the <code>Eval</code> interface. This is quite unpleasant for our users since they are forced to always download two bundles. Since the service API package and our simple implementation are tightly coupled (virtually any change will force a change in our provider) we can simplify the life of our customers by exporting the API from our provider bundle. This an be done by dragging the imported package in the right ‘Import Packages’ list to the Exported Package list and dropping it there.  If there is already an export of the <code>com.acme.prime.eval.provider.api</code> then you should remove it, it is a placeholder.</p>
+
+<p>After you save the <code>bnd.bnd</code> file, you’ll see that the imports disappear.</p>
+
+<p><img src="/img/tutorial_base/provider-imports-2.png" alt="Exporting the  API" /></p>
+
+<p>Exporting the API should only be done by the providers of the service API, never by the consumers. Anyway, our bundle now looks different:</p>
+
+<p><img src="/img/tutorial_base/provider-imports-3.png" alt="Exporting the  API" /></p>
+
+<h2 id="how-does-it-work">How Does it Work?</h2>
+
+<p>The concepts of consumers and providers can be confusing, mostly because it is often confused with implementers of an interface and the clients of an interface. However, providers of a service API can both implement and/or be a client of interfaces in the service package. A provider is responsible for providing the value of the contract, and a consumer receives the value of the contract. The reason we need to distinguish between these two roles is that they have far ranging consequences for how you package and version bundles.</p>
+
+<p>Lets say you buy a house from me. In this scenario you are consumer of the contract and I am the provider of the contract. These roles are, surprisingly, not symmetrical. For example, if the seller adds an extra room after the contract was signed then the buyer will not object (ok, in general, you get my point). However, if the seller removes a room the buyer is going to be upset. A consumer can expect backward compatibility but a provider is closely bound to the contract. Virtually any change in the service contract will require a provider to be updated to provide the new functions. </p>
+
+<p>So a consumer is relatively distant from the contract and it often plays the role of a consumer in many different service contracts. A provider usually provides only a single service contact while being a consumer in other service contracts.  </p>
+
+<p>Therefore the best practice in OSGi is for a provider to include its service API. Separating the API from the provider makes no sense since there is a 1:1 relation because there is no backward compatibility for a provider. Having the API in the bundle just makes life easier.</p>
+
+<p>In this section we dragged the service API import to the exported package list. For developers not used to bnd this can be surprising because the API is not part of the provider project; it came from the API project. However, in bnd you can put any package in your bundle that is available on the build path.</p>
+
+
+				</div>
+				<hr/>
+				<a class=nav-prev href="300-api.html" >Prev</a>
+				<a class=nav-next href="340-junit.html" >Next</a> 
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href='340-junit.html'></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>

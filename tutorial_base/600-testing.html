@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
+
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>Testing in OSGi</title>
+
+
+</head>
+
+
+<body>
+
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><b>BETA</b>
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Guide</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-services.html">Service Catalog</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<div>
+				<a class=nav-prev href="500-testing.html" >Prev</a>
+				<a class=nav-next href="700-deploy.html" >Next</a> 
+				<br/>
+				<hr/>
+				<h1> Testing in OSGi</h1>
+				<div class=tutorial-content>
+				<h2 id="what-you-will-learn-in-this-section">What You Will Learn in This Section</h2>
+
+<p>In this section we define OSGi based testing in an actual framework. OSGi tests start a configured framework and then execute a JUnit Runner to execute the tests. The test framework is completely integrated with the Eclipse JUnit support, it works almost identical.</p>
+
+<p>The intention of an OSGi JUnit test is to test service contracts; in general it is used to test if a provider fulfills the service contract. This means these tests are black-box tests; there is no knowledge about their inside.</p>
+
+<p>If you’re running the framework from the previous tutorial section then it is now time to kill it. In this section we run automated tests.</p>
+
+<h2 id="osgi-junit-test">OSGi JUnit Test</h2>
+
+<p>An OSGi JUnit test is a new project. So create a <code>com.acme.prime.eval.test</code> project, be sure to  use the OSGi enRoute templates. Since this project name ends with <code>.test</code> we automatically get a proper test setup.</p>
+
+<p><img src="/img/tutorial_base/test-test-0.png" alt="Test Project" /></p>
+
+<p>A tad confusing is the fact that in an OSGi Test project you will work in the <code>src</code> directory and <em>not</em> the <code>test</code> directory because we create a test bundle; if we used the <code>test</code> source directory would never end up with any classes in the bundle. Classes in the <code>test</code> directory are never added to the JAR file.</p>
+
+<p>The OSGi enRoute template is already filled with a simple test case that gives us a Bundle Context but that test case does not use our service yet. </p>
+
+<pre><code>package com.acme.prime.eval.test;
+import org.junit.Assert;
+import org.junit.Test;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+public class EvalTest {
+
+    private final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+    
+    @Test
+    public void testEval() throws Exception {
+    	Assert.assertNotNull(context);
+    }
+}
+</code></pre>
+
+<p>So how do we get the Eval service to test? This is a cumbersome because we do not get support from DS. Alas, back to the old days when you had to get a service by hand:</p>
+
+<pre><code>&lt;T&gt; T getService(Class&lt;T&gt; clazz) throws InterruptedException {
+	ServiceTracker&lt;T,T&gt; st = new ServiceTracker&lt;&gt;(context, clazz, null);
+	st.open();
+	return st.waitForService(1000);
+}
+</code></pre>
+
+<p>We of course leak service trackers but for a test case that is not a major problem.</p>
+
+<p>We now need to add a test if our service exists. </p>
+
+<pre><code>Assert.assertNotNull(getService(Eval.class));
+</code></pre>
+
+<p>However, if we add this code we find that Eclipse can’t find the <code>Eval</code> class. Remember the problem? We need to add the <code>com.acme.prime.eval.api</code> project to our build path. Double click the <code>bnd.bnd</code> file, select <code>Build</code> and add the <code>com.acme.prime.eval.api</code> project. Once the <code>bnd.bnd</code> file is saved we can import the <code>Eval</code> class and remove the error. Though the current provider now also exports the <code>com.acme.prime.eval</code> package it is bad practice to place an implementation bundle on your classpath: Always try to compile against the service contract.</p>
+
+<p>We’re almost ready to run, ehh, test. But before we do the testing, let’s think about our runtime. How should our environment look like? Let’s go to the <code>Run</code> tab of the <code>bnd.bnd</code> file. The list of initial requirements is empty. What shall we add? Well, we need our shiny provider and that should be it. In the <code>bnd.bnd</code> the <code>Run</code> tab we always get the local bundle added to our run bundles.</p>
+
+<p class="bug">There is an issue in bndtools and this test resolve. Don’t add the test bundle or you will get an unresolved on Junit. We’re working on fixing this because this behavior is incorrect.</p>
+
+<p>Hit the <code>Resolve</code> button and safe. We have only a few dependencies, all caused by the fact that the provider uses Declarative Services (DS) a.k.a. SCR.</p>
+
+<p>Our bundles now look as follows:</p>
+
+<p><img src="/img/tutorial_base/test-test-1.png" alt="Test Project" /></p>
+
+<p>To run the test, we must select the <code>com.acme.prime.eval.test</code> project, its <code>src</code> folder, a package in this folder, a class in this package, a method in the a class, or the bnd.bnd file. We can then do <code>@/Debug As/Bnd OSGi Test Launcher (JUnit)</code>. This executes the test which are then reported in the standard JUit view. Remember the pilots and retractable gears, want to bet you confuse the entries <code>JUnit Test</code> and <code>Bnd OSGi Test Launcher (JUnit)</code>. Or even worse now, you often will accidentally select <code>Bnd OSGi Run Launcher</code>. If you do the latter, you get an error that the bundles cannot be resolved because JUnit is missing.</p>
+
+<p>And then … the green bar!</p>
+
+<p><img src="/img/tutorial_base/test-test-2.png" alt="Test Project" /></p>
+
+<h2 id="testing--debugging">Testing &amp; Debugging</h2>
+
+<p>The current tests only tests if the service exists. So lets add some more:</p>
+
+<pre><code>@Test
+public void trig() throws Exception {
+	Assert.assertSame( 1, (int)getService(Eval.class).eval("sin(1)*sin(1)+cos(1)*cos(1)"));
+}
+</code></pre>
+
+<p>The tests are run in a real OSGi Framework but this does not stop us from debugging. Just click on the left margin next to the <code>trig</code> function, select the function name, and then <code>@/Debug As/Bnd OSGi Test Launcher (JUnit)</code>. The debugger stops in the method and you can now single step, even if this crosses to another bundle.</p>
+
+<p>If you make changed then in this case the changes are not immediately reflected in the running framework. </p>
+
+<h2 id="how-does-it-work">How Does it Work?</h2>
+
+<p>Test bundles are normal bundles but are marked with a special header: <code>Test-Cases</code>. This header contains a list with class names that contain JUnit tests. If you look in the <code>bnd.bnd</code> <code>Source</code> tab then you see that this header looks like:</p>
+
+<pre><code>Test-Cases: ${test-cases}
+</code></pre>
+
+<p>The <code>${test-cases} macro is set by OSGi enRoute; it calculates the classes that either extend </code>junit.framework.TestCase<code> class or that use the the JUnit 4 annotations like </code>@Test` (you cannot combine these mechanisms). In our example the expansion looks like:</p>
+
+<pre><code>Test-Cases: com.acme.prime.eval.test.EvalTest
+</code></pre>
+
+<p>You can verify this by double clicking on the <code>generated/com.acme.prime.eval.test.jar</code> and looking for the <code>Test-Cases</code> header in the manifest.</p>
+
+<p>When you launch an OSGi JUnit test, bnd will create a new framework with the set run bundles. On the class path for this framework it also adds a bundle <code>aQute.junit</code> as well as any JARs listed on the <code>-testpath</code>. Any features available for running a framework can also be used for running a test, e.g. <code>-runproperties</code> and <code>-runtrace</code>.</p>
+
+<p>After the bundles are all started the <code>aQute.junit</code> bundle will scan all bundles for the magic <code>Test-Cases</code> header. It will then load those classes and run their tests.</p>
+
+<p>If the tests are run from the Eclipse JUnit framework then the model is slightly different. Then bnd sets up a new framework as indicated but it passes the set of classes/methods that Eclipse had decided from the selection. For example, all tests in a package. The <code>aQute.junit</code> will then only execute those classes/methods and will report the results back to Eclipse so they can be shown in the JUnit view.</p>
+
+				</div>
+				<hr/>
+				<a class=nav-prev href="500-testing.html" >Prev</a>
+				<a class=nav-next href="700-deploy.html" >Next</a> 
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href='700-deploy.html'></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>

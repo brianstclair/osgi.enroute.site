@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
+
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>The Workspace</title>
+
+
+</head>
+
+
+<body>
+
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><b>BETA</b>
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Guide</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-services.html">Service Catalog</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<div>
+				<a class=nav-prev href="100-prerequisites.html" >Prev</a>
+				<a class=nav-next href="300-api.html" >Next</a> 
+				<br/>
+				<hr/>
+				<h1> The Workspace</h1>
+				<div class=tutorial-content>
+				<h2 id="what-you-will-learn-in-this-section">What you will learn in this section</h2>
+
+<p>In this section you will learn what a bnd workspace is and how it relates to the Git and Eclipse workspaces. We will address naming and how to use a ready made enRoute workspace template from github to get all the settings we need in one go. At the end of this section you will have a new workspace.</p>
+
+<p>Optionally, you can learn how Eclipse, Git, enRoute, and bnd workspaces relate to each other.</p>
+
+<p>Before you start this section, make sure you’ve checked the <a href="100-prerequisites.html">prerequisites</a> for enRoute on your platform. </p>
+
+<h2 id="the-workspace">The Workspace</h2>
+
+<p>Since bnd(tools) is the central toolchain for OSGi enRoute starting with enRoute means starting with bnd(tools), the bnd based tools. A crucial concept in bnd is the <em>workspace</em>. The workspace contains a number of <em>projects</em>, that can each create multiple <em>bundles</em>. The workspace also has a <code>cnf</code> directory that contains shared information that can be referenced and used in the projects. </p>
+
+<p>The enRoute project maintains a Github repository with <a href="https://github.com/osgi/workspace">an archetypical workspace for bnd</a>. enRoute will maintain this repository with new release. This workspace is setup to contain:</p>
+
+<ul>
+  <li>A properly configured bnd workspace</li>
+  <li>A configuration that uses JPM as the remote repository (which contains Maven Central) for external dependencies.</li>
+  <li>A gradle build</li>
+  <li>Travis CI YAML file to built it on travis-ci.com</li>
+</ul>
+
+<h3 id="naming">Naming</h3>
+
+<p>First we must decided on a name (very important!). Best practice is to use a directory with all your workspaces that has a short path since it is likely you use it a lot in a shell, for example <code>/Ws</code>. Then use reverse domain names for the workspace name, based on your domain name and the topic of the workspace, for example <code>com.acme.prime</code>. To prevent yourself from unnecessary misery, do not use spaces in the path. Yes, spaces do work. Yes, you will regret using spaces in path names. </p>
+
+<p>In this chapter we use <code>/Ws/com.acme.prime</code> as the user’s Eclipse workspace location (which is not going to be the bnd workspace!).</p>
+
+<h3 id="start-bndtools">Start bndtools</h3>
+
+<p>So fire up Eclipse and select <code>/Ws/com.acme.prime</code> as the Eclipse workspace. You’ll get the start screen, just close it and select the bndtools perspective. You can select an Eclipse perspective with <code>Window/Open Perspective/Bndtools</code>. If there is no <code>Bndtools</code> entry, select <code>Other ...</code> and then select Bndtools. If there is still no entry, then you have <a href="http://bndtools.org/installation.html">not installed bndtools yet</a>. </p>
+
+<h3 id="import-the-archetype-workspace">Import the Archetype Workspace</h3>
+
+<p>We are going to use the OSGi enRoute archetype workspace, which is a <a href="https://github.com/osgi/workspace">Github repository</a>. We need to import this archetype so select <code>File/Import</code>. </p>
+
+<p><img src="/img/tutorial_base/workspace-import-0.png" alt="Import archetype" /></p>
+
+<p>Then select the <code>Projects from Git</code>. </p>
+
+<p><img src="/img/tutorial_base/workspace-import-1.png" alt="Select Projects from Git" /></p>
+
+<p>And <code>Clone URI</code>. </p>
+
+<p><img src="/img/tutorial_base/workspace-import-2.png" alt="Select Clone URI" /></p>
+
+<p>You should then enter the URI; the URI that we should use is</p>
+
+<blockquote>
+  <p><code>https://github.com/osgi/workspace.git</code></p>
+</blockquote>
+
+<p>So fill in the base URL, which should then give you:</p>
+
+<p><img src="/img/tutorial_base/workspace-import-3.png" alt="Fill in the base URL" /></p>
+
+<p>On the next <code>Next</code> you must select the branch. The default is <code>master</code> and that is what we want.</p>
+
+<p><img src="/img/tutorial_base/workspace-import-4.png" alt="Select Clone URI" /></p>
+
+<p>If you then click <code>Next</code> you should see the page that allows you to specify the destination of your Git (and bnd) workspace. By default Git places the projects in a sub directory <code>git</code> of your home directory (<code>~/git/...</code>). (This is an Eclipse preference.) We will follow this rather sane convention since this separation makes a lot more sense than you probably think. So we follow the default but we rename the workspace directory from ‘workspace’ to a name that matches our Eclipse workspace: <code>com.acme.prime</code>.</p>
+
+<p><img src="/img/tutorial_base/workspace-import-5.png" alt="Select Clone URI" /></p>
+
+<p>On the <code>Next</code> page we must define how to import the projects. A bnd workspace contains potentially many projects so the default option is ok, <code>Import existing projects</code>.</p>
+
+<p><img src="/img/tutorial_base/workspace-import-6.png" alt="Import Projects" /></p>
+
+<p>You now see the projects that will be imported from this new workspace., so you can click <code>Next</code>. The mini Package Explorer shows a single project <code>cnf</code>. </p>
+
+<p><img src="/img/tutorial_base/workspace-import-7.png" alt="Import cnf and Finish" /></p>
+
+<p>Since this is all what we want imported, we can cick <code>Finish</code> then this project will be imported.</p>
+
+<p>Congratulations, you’ve created your first enRoute workspace!</p>
+
+<h3 id="about-the-workspace">About the Workspace</h3>
+
+<p>An bnd workspace requires a <code>cnf</code> project. This project configures bndtools and contains information shared between all the projects in the bnd workspace. You can look upon the bnd workspace as a kind of next order module that imports and exports bundles, in that view, the <code>cnf</code> project contains workspace private information. </p>
+
+<p>So, we now have the following file layout for the <em>Eclipse workspace</em>:</p>
+
+<pre><code>/Ws                      workspaces
+  com.acme.prime         Eclipse Workspace
+    .metadata            The Eclipse metadata
+</code></pre>
+
+<p>The bnd and Git workspace have the following layout:</p>
+
+<pre><code>~/                       User's home directory
+  git/                   Default Eclipse's git workspace directory
+    com.acme.prime       The Git repository/ bnd workspace
+      .git               The git control folder
+      cnf                The bnd control folder 
+      ....               Build files
+</code></pre>
+
+<p>Fortunately, from Eclipse it looks very simple:</p>
+
+<p><img src="/img/tutorial_base/workspace-final-0.png" alt="Import cnf and Finish" /></p>
+
+<p>You now have to restart Eclipse to make sure bndtools picks up the proper location. After you have restarted Eclipse, make sure you select the <em>bndtools perspective</em>. On the top right corner of the Eclipse workspace window you find a workspace icon with a ‘+’, this is a button that pops up a list of perspectives. You can also do <code>Window/Open Perspective/Other ...</code>. Select <code>Bndtools</code>.</p>
+
+<p><img src="/img/tutorial_base/workspace-perspective-0.png" alt="Import cnf and Finish" /></p>
+
+<h2 id="how-does-it-work">How Does it Work?</h2>
+
+<p>It helps to understand how the workspace are layed out. An Eclipse workspace is a directory where Eclipse stores its metadata, e.g. the plugins persistent storage or the history. Though it can be used to also store the actual projects, it is in general not a good idea, especially if you use a source control system. EGit can actually become quite slow when you include the Git workspace.</p>
+
+<p>Therefore, the best way to work with projects in Eclipse is to not store them in the Eclipse workspace folder but import them from another directory.</p>
+
+<p>For bnd, a workspace is a directory with a <code>cnf</code> folder and a number of projects. This is a flat space; hated by many but it works quite well because it is very simple and hard to get wrong. Don’t count on it changing so do not try to work around it, you’re regret it. The <code>cnf</code> folder contains a <code>build.bnd</code> file and a <code>ext</code> directory which together define the workspace properties.</p>
+
+<p>A bnd workspace is like a module; it imports bundles (and JARs) from a repository and it exports bundles to the same or another repository. On the inside we have projects that are private to the workspace. The projects should be cohesive so that they can share information via the <code>cnf</code> project.</p>
+
+<p>The Git workspace is a directory that has a <code>.git</code> sub directory. When used with bnd, the Git workspace and the bnd workspace overlap. That is, the bnd workspace is one Git workspace, projects do not have their own repositories. </p>
+
+
+				</div>
+				<hr/>
+				<a class=nav-prev href="100-prerequisites.html" >Prev</a>
+				<a class=nav-next href="300-api.html" >Next</a> 
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href='300-api.html'></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>
