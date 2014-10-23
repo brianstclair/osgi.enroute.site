@@ -103,19 +103,39 @@
 
 <h2 id="model">Model</h2>
 
+<h3 id="services">Services</h3>
+
 <p>Service Oriented Systems are build from the lowest level from a very simple concept: a service. A service is an instance registered with a broker whose role is defined by a <em>service contract</em>; a contract is specified in a <em>Java package</em>. A contract defines a number of roles and their behavior in the collaboration scenarios supported by that service. For example, in the Event Admin specification there are three roles, the event Handler, the Event Admin provider, and the event source. The contract specifies what happens when an event is posted and what the responsibilities of the specified roles are. The roles are specified in <em>Java interfaces</em> so that their syntactic rules can be enforced by the compiler.</p>
 
 <p>The broker is dynamic, services can be registered at any time and also withdrawn. Services can be found by their role as well as <em>service properties</em> related to their roles. Services are a type of a publish-find-bind model. In OSGi terminology you <code>register</code> a service (publish), you <code>get</code> a service (bind), and you <code>listen</code> to a service. Services are represented with the following symbol:</p>
 
 <p><img src="/img/book/service-def-0.png" alt="Service Legend" /></p>
 
-<p>Service instances are the active roles, they are played by a <em>service component</em>. A service component is an object that implements 0 or more roles. To simplify or enable its implementation, a service component can depend on a number of services. A component is free to use any number of implementation classes but it must be attempt to only collaborate with other components through services. Systems that only use this mechanism are significantly simpler to <em>assemble</em> later.</p>
+<p>The purpose of a service is to abstract a well defined responsibility and its state.</p>
+
+<h3 id="service-components">Service Components</h3>
+
+<p>A service component is an object that implements 0 or more roles. A service component can (dynamically) depend on a number of other services and uses any number of implementation classes. However, a service component should only collaborate with other components through services.  Service components are <em>active</em>, that is, they can decide themselves when to start running without requiring a central registration. Service components can use libraries but should never use those libraries to exchange or share state. They should also not use static variables.</p>
+
+<p>Components can interact with external resources (diagram: parallelograms). </p>
 
 <p><img src="/img/book/component-def-0.png" alt="Service Legend" /></p>
 
-<p>Components are packaged in <em>bundles</em>, potentially many components in one bundle. A bundle is a JAR file with Java code and general resources described by a <em>manifest</em>. A bundle is a <em>module</em> where all its code is by default private. The manifest can declare some of its packages <em>exported</em>. Since the module will depend on other packages, the manifest explicitly declares the packages that are needed by its contents.</p>
+<h3 id="bundles">Bundles</h3>
+
+<p>Service components are packaged in <em>bundles</em>, potentially many components in one bundle. A bundle is a JAR file with Java code and general resources described by a <em>manifest</em>. A bundle is a <em>module</em> where all its code is by default private. The manifest can declare some of its packages <em>exported</em>. Since the module will depend on other packages, the manifest explicitly declares the packages that are needed by its contents. Exported an imported packages should be restricted to <em>service contracts</em> and libraries.</p>
 
 <p>A bundle is a reified entity in runtime with its own life cycle. When installed it will be able to run until it is <em>resolved</em>. The OSGi Framework has the responsibility to wire bundles together so that the imports match corresponding exports. Before a bundle is active, none of its component may be active.</p>
+
+<h3 id="libraries">Libraries</h3>
+
+<p>A library is a bundle without internal state and should therefore have no components or Bundle Activator. A library provides an API to do certain tasks but all observable state is maintained in instance variables and never in statics. Libraries should be started like all bundles but will not act differently when they are started or not because they lack state. Libraries never register or use services.</p>
+
+<p>The purpose of a library is to provide convenience functions for a specific area. Libraries do not provide substitution.</p>
+
+<h3 id="frameworks">Frameworks</h3>
+
+<p>A framework hosts a number of bundles. Some services registered by those bundles can be exported, they can become available outside the framework as an <em>endpoint</em>. </p>
 
 <h2 id="architecture">Architecture</h2>
 

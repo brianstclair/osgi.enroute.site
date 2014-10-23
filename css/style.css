@@ -843,6 +843,18 @@ p.bug {
     font-weight: bold;
     content: "BUG: "; }
 
+p.warning {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #f7fcb4;
+  padding: 0.5em;
+  margin: 0.5em 0 0.5em 0;
+  border: solid 1px #FFE0E0; }
+  p.warning:before {
+    font-weight: bold;
+    content: "WARNING: "; }
+
 pre.shell {
   color: white;
   background-color: black; }

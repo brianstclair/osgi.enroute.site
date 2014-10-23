@@ -78,12 +78,7 @@
 				<hr/>
 				<h1> Creating an Application</h1>
 				<div class=tutorial-content>
-				<p>In the previous section we created a fresh clean OSGi enRoute workspace in <code>~/git/com.acme.prime</code> and selected the <code>Bndtools</code> perspective. In this section we’re going to create an application project in this workspace that will run inside an OSGi framework. This application will create a command for a command line. It will simply echo the command but turn lower case characters into upper case. It should operate something like:</p>
-
-<pre><code>g! upper:upper "this is lower case"
-THIS IS LOWER CASE
-g!
-</code></pre>
+				<p>In the previous section we created a fresh clean OSGi enRoute workspace in <code>~/git/com.acme.prime</code> and selected the <code>Bndtools</code> perspective. In this section we’re going to create an application project in this workspace that will run inside an OSGi framework. This ‘application’ will provide a web user interface based on Google’s <a href="https://angularjs.org/">Angular JS</a> and Twitter’s <a href="http://getbootstrap.com/">Bootstrap</a>. We will use the OSGi enRoute built-in template since this is setup to provide exactly that (coincidence of course!).</p>
 
 <p>So let’s get started by creating a new Bndtools Project. Select <code>File/New/Bndtools OSGi Project</code>.</p>
 
@@ -101,43 +96,37 @@ g!
 
 <p><img src="/img/qs/app-create-3.png" alt="Select the OSGi enRoute template" /></p>
 
-<p>So we can just click <code>Finish</code> and get it over with. If Eclipse has done its work, Eclipse should give you the following view:</p>
+<p>So we can just click <code>Finish</code> and get it over with.</p>
 
-<p><img src="/img/qs/app-create-4.png" alt="Select the OSGi enRoute template" /></p>
+<h2 id="code">Code</h2>
 
-<h2 id="code-changes">Code Changes</h2>
+<p>The OSGi enRoute template has already created some source code for us. This source code is making a single page web-application. So double click on the <code>UpperApplication.java</code> source file to open the Java editor to see what kind of code we need. </p>
 
-<p>The OSGi enRoute template has already created some source code for us, which (surprise!), is a Gogo command. This is not specially for the tutorial. An application project should contain very little code but hold the requirements so that bnd(tools) can use the dependencies to construct a deployable unit. It turns out having a Gogo command for such application is actually very useful.</p>
+<p><img src="/img/qs/upper-0.png" alt="The UpperApplication source code" /></p>
 
-<p>So double click on the <code>UpperApplication.java</code> source file to open the Java editor. A few explanations:</p>
+<p>So what’s in there? The first thing you will see are a number <em>Require</em> annotations. These annotations ensure that we include the proper web resources for our application like Angular, Bootstrap, and the web extender that serves our static pages. Then we have the component annotation that makes this object a Declarative Services <em>service component</em>. A service component automatically is registered as a service when it implements an interface and it can  depend on other services.</p>
 
-<ul>
-  <li><code>@Component</code> – This annotation makes this object a Declarative Services <em>service component</em>. A service component automatically is registered as a service and it can very easily dynamically depend on other services.</li>
-  <li><code>service</code> – This is the service that will be registered for this component.</li>
-  <li><code>property</code> – The properties in the component annotation are service properties that Gogo will use to register commands. Gogo commands have a <em>scope</em> and a <em>function</em>. A command in Gogo is therefore <code>&lt;scope&gt;:&lt;function&gt;</code>, the scope is optional. The function must match a method in this class.</li>
-  <li><code>name</code> – This is the name, called Persistent ID or PID in OSGi, used for the configuration for this component.</li>
-</ul>
+<p>This <code>UpperApplication</code> component implements the <em>REST</em> interface and is thus registered as a <em>REST</em> service. The contract of this service indicates that any public method in this class becomes available as a REST end-point. The <code>getUpper</code> method is for the <code>GET</code> method (duh, it starts with <code>get</code>. If you want a <code>POST</code> call it <code>postUpper</code>) and it is mapped from the <code>/rest/upper</code> URI. Since it accepts a single argument, we can specify the word we want to upper case as <code>/rest/upper/&lt;word&gt;</code>. </p>
 
-<p>Providing an implementation for our requirements should be rather trivial:</p>
+<p class="warning">This method is called from an untrusted external source so should in general be protected by a check for authorization.</p>
 
-<pre><code>public String upper(String m) throws Exception {
-	return m.toUpperCase();
-}
-</code></pre>
+<p>Since this is a single page web app we also need some static resources for the Javascript code and the Bootstrap CSS. These resources are stored in the <code>static</code> directory which is included in our bundle. These resources are directly mapped to the root. That is, a resource with the path <code>static/abc/def</code> will be available as <code>/abc/def</code>. </p>
+
+<p>The <code>com.acme.prime.upper/index.html</code> contains the single page HTML root. It defines a header, view area, and a footer. The <code>com.acme.prime.upper/main/main.js</code> contains the Javascript code, and the <code>com.acme.prime.upper/main/htm</code> directory contains <em>html fragments</em> that are inserted in the main page depending on the URI. Take a look at these resources and notice how these resources can use macros from the build environment.</p>
+
+<p>We wont’ go into more detail now because we just want to see it run! Understanding is a lot easier when you see it all run.</p>
 
 <h2 id="defining-a-runtime">Defining a Runtime</h2>
 
-<p>Double click on the <code>com.acme.prime.upper.bndrun</code> file and select the <code>Run</code> tab. In this tab we can express the requirements we have on the runtime. Initially, we only have a requirement on the current project. However, to do something useful, it might be useful to add the Gogo shell.</p>
+<p>Double click on the <code>com.acme.prime.upper.bndrun</code> file and select the <code>Run</code> tab. In this tab we can express the requirements we have on the runtime. Since we specified our requirements via the <em>Require</em> annotations, we’re good to go as long as our application is listed in the initial requirements. This is the case by default. You could any of the other bundles listed on the left side but lets assume we’re good for now.</p>
 
-<p>In the left list, marked <code>Available Bundles</code>, we can type <code>gogo</code> in the search box. This limits the set of available bundles to Gogo. Then drag the shell to the right side, the list titled <code>Run Requirements</code>. </p>
+<p><img src="/img/qs/resolve-initial-0.png" alt="Runtime Requirements" /></p>
 
-<p><img src="/img/qs/resolve-initial-0.png" alt="Initial Requirements" /></p>
-
-<p>We only have to add the Gogo shell bundle because we will <em>resolve</em> the runtime. Resolving means that bnd(tools) will look at what is required, add that to the runtime, and then look what those new elements require, ad nauseum. So click on the <code>Resolve</code> button. This will open a dialog that shows you what bundles are required in runtime.</p>
+<p>So hit the <code>Resolve</code> button. This will open a dialog that shows you what bundles are required in runtime.</p>
 
 <p><img src="/img/qs/resolve-initial-1.png" alt="Resolved set" /></p>
 
-<p>You can <code>Finish</code> this set, which will set the <code>Run Bundles</code> list. This list is normally closed but if you open it you can the resulting bundles.</p>
+<p>You can click <code>Finish</code>, which will set the <code>Run Bundles</code> list. This list is normally not visible, it is closed, but if you open it you can the resulting bundles.</p>
 
 <p><img src="/img/qs/resolve-initial-2.png" alt="Resolved set" /></p>
 
@@ -145,45 +134,36 @@ g!
 
 <p><img src="/img/qs/run-buttons-0.png" alt="Resolved set" /></p>
 
-<p>If you now look at the Eclipse console view, you’ll see that the Gogo shell has started:</p>
+<p>You are app is running and waiting for customers to enjoy the terrific upper casing: </p>
 
-<pre><code>____________________________
-Welcome to Apache Felix Gogo
+<p><a href="http://localhost:8080/com.acme.prime.upper">http://localhost:8080/com.acme.prime.upper</a>!</p>
 
-g! 
-</code></pre>
+<p>Just click on the ‘To Upper!’ button. This will ask you for a word and then prints the word in the alert bar.</p>
 
-<p>Let’s see if our command works:</p>
-
-<pre><code>g! upper:upper "this is lower case"
-THIS IS LOWER CASE
-g!
-</code></pre>
-
-<p>Obviously it works, and we’re now 100% Function complete!</p>
+<p><img src="/img/qs/app-0.png" alt="The Application" /></p>
 
 <h2 id="debugging">Debugging</h2>
 
-<p>You can debug this project as you can any other project. You can set breakpoints and single stop. There is one difference with more traditional Java. In our case, we generate a bundle that gets deployed on every change we make. If you change some code an save it, a new bundle will get deployed. If you get more requirements in the <code>bndrun</code> file, those new bundles will be deployed or no longer necessary bundles get removed. This works so well that the dialog box that Eclipse sometimes pops up to tell you it could not patch the class files can be ignored because bnd does not rely on patching.</p>
+<p>Of course you will never need to debug enRoute projects since they are by definition perfect! However, since perfection isn’t what it used to be, let’s see how we can do some debugging in this project.</p>
+
+<p>You can debug this project as you can any other project in Java. You can set breakpoints and single step. There is one difference with more traditional Java. In our case, we generate a bundle that gets deployed on every change we make. If you change some code an save it, a new bundle will get deployed. If you get more requirements in the <code>bndrun</code> file, those new bundles will be deployed or no longer necessary bundles get removed. This works so well that the dialog box that Eclipse sometimes pops up to tell you it could not patch the class files can be ignored because bnd does not rely on this patching.</p>
 
 <p><img src="/img/qs/debug-patch-0.png" alt="Resolved set" /></p>
 
-<p>So just click the checkbox and dismiss it. So that out of the way, let’s change our code from making this upper case code to return lower case code. (Don’t kill the running framework.)</p>
+<p>So just click the check-box and dismiss this dialog. That out of the way, let’s change our code from making this upper case code to return lower case code. (Don’t kill the running framework.)</p>
 
-<pre><code>public String upper(String m) throws Exception {
-	return m.toUpperCase();
+<pre><code>public String getUpper(RESTRequest req, String string) throws Exception {
+	return string.toLowerCase();
 }
-
-g! upper:upper "THIS IS UPPER CASE"
-this is upper case
-g!
 </code></pre>
+
+<p>If there are no Javascript or html fragment changes you need to refresh the page in the browser to reload. Otherwise you can just click the button on your browser and try it out. You actually rarely have to restart the framework.</p>
 
 <h2 id="osgi-details">OSGi Details</h2>
 
 <p>We’re running in a framework but there is not much to see of the framework yet. Obviously, we will need tools to see what bundles are running and what services are registered. Well, every application project has a basic <code>bndrun</code> file and a <code>debug.bndrun</code> file. The <code>debug.bndrun</code> file inherits from the basic one but it adds a lot of support to look inside the framework.</p>
 
-<p>Let’s first kill our running framework. Just click the red button on the console view. Also, if you’ve done some debugging, you might want to treturn to the Bndtools perspective.</p>
+<p>Let’s first kill our running framework. Just click the red button on the console view. Also, if you’ve done some debugging, you might want to return to the Bndtools perspective.</p>
 
 <p>Then double click the <code>debug.bndrun</code> file and select the <code>Run</code> tab, then click on the <code>Resolve</code> button. This gives us a much larger list of bundles. The debug enRoute settings add Web Console, XRay, a web server etc. These are invaluable tools. </p>
 
@@ -191,7 +171,7 @@ g!
 
 <p>So save the <code>debug.bndrun</code> file and click <code>Debug OSGi</code>. First, this <code>bndrun</code> file will run in trace mode. (You can control this through the <code>-runtrace</code> property that you can see when you double click the <code>debug.bndrun</code> file and select the <code>Source</code> tab.) In trace mode, the launcher provides detailed information about the launch process as well the ongoing update process when there are changed in bndtools.</p>
 
-<p>Anyway, the cool part now is that we have <a href="http://felix.apache.org/site/apache-felix-web-console.html">Web Console</a> running with XRay. Just click on <a href="http://localhost:8080/system/console/xray">http://localhost:8080/system/console/xray</a>.</p>
+<p>Anyway, we now have the unsurpassed <a href="http://felix.apache.org/site/apache-felix-web-console.html">Web Console</a> running with XRay. Just click on <a href="http://localhost:8080/system/console/xray">http://localhost:8080/system/console/xray</a>.</p>
 
 <p><img src="/img/qs/debug-xray-0.png" alt="Resolved set" /></p>
 
@@ -199,13 +179,13 @@ g!
 
 <h2 id="creating-an-executable">Creating an Executable</h2>
 
-<p>The last part of this quick start is creating an executable JAR out of our application. The export facility of bnd(tools) makes it possible to create a JAR that contains all the dependencies, including the launcher and the framework. This is sometimes hard to understand for enterprise developers, that you can actually run code without an application server!</p>
+<p>The last part of this quick start is creating an executable JAR out of our application. The export facility of bnd(tools) makes it possible to create a JAR that contains all the dependencies, including the launcher and the framework. This is sometimes hard to understand for enterprise developer, that Java can actually run outside an application server!</p>
 
 <p>Double click on the <code>com.acme.prime.upper.bndrun</code> file and select the <code>Run</code> tab.</p>
 
 <p>At the top of this window you see the following buttons:</p>
 
-<p><img src="/img/qs/run-buttons-0.png" alt="Resolved set" /></p>
+<p><img src="/img/qs/run-buttons-0.png" alt="Run buttons" /></p>
 
 <p>The <code>Export</code> button creates an executable JAR out of the specification of its corresponding <code>bndrun</code> file. The execution will be identical to when you run your code inside eclipse. So click on the <code>Export</code> button:</p>
 
@@ -215,7 +195,11 @@ g!
 
 <p><img src="/img/qs/export-1.png" alt="Resolved set" /></p>
 
-<p>Then we click <code>Finish</code>. Let’s go to a shell to see if we can execute our code.</p>
+<p>Then we click <code>Finish</code>. </p>
+
+<p>Make sure you have no more frameworks running. Since we have a webserver running we easily run in a conflict for the 8080 port number.</p>
+
+<p>Let’s go to a shell to see if we can execute our code.</p>
 
 <pre class="shell"><code>$ cd ~/Desktop
 $ java -version
@@ -223,15 +207,16 @@ java version "1.8.0"
 Java(TM) SE Runtime Environment (build 1.8.0-b132)
 Java HotSpot(TM) 64-Bit Server VM (build 25.0-b70, mixed mode)
 $ java -jar com.acme.prime.upper.jar
-____________________________
-Welcome to Apache Felix Gogo
-
-g! upper:upper "Some Mixed Test"
-some mixed test
-g!
 </code></pre>
 
-<p>You can do Control-C to exit.</p>
+<p>We can now go to <a href="http://localhost:8080/com.acme.prime.upper">http://localhost:8080/com.acme.prime.upper</a> and see that our application also runs from the command line.</p>
+
+<p>You can do Control-C in the shell to exit.</p>
+
+<pre class="shell"><code>$ java -jar com.acme.prime.upper.jar
+^C
+$
+</code></pre>
 
 
 				</div>
