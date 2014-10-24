@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
+
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>osgi.enroute.rest.api</title>
+
+
+</head>
+
+
+<body>
+
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><b>BETA</b>
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Guide</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-services.html">Service Catalog</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<img class=short-header src="/img/header-short-book.png">
+			<div class='notes-margin book'>
+				<h1> osgi.enroute.rest.api</h1>
+				<h2 id="introduction">Introduction</h2>
+
+<p>The OSGi enRoute REST API specifies a service contract for components to provide REST <em>end-points</em>. Representational State Transfer (REST) is an architectural style that allows the interchange of information between elements of a distributed system. A REST end-point has an HTTP(S) URL and can thus be accessed from all modern computing environments. An end-point defines the meaning of the segments of this URL, any specified parameters in the URL, as well as the used HTTP verb (GET, PUT, POST, etc). For example:</p>
+
+<pre><code>GET /rest/upper/&lt;word&gt;?alphaonly=true
+</code></pre>
+
+<p>This end-point is mapped to the URI <code>/rest/upper</code> and the next segment specifies the word to translate to upper case. The <code>alphaonly</code> is a <em>parameter</em> on the URL, in this case a boolean.</p>
+
+<p>A HTTP request can specify a <em>payload</em>, this is normally associated with the <code>POST</code> and the <code>PUT</code> verb. As response, the HTTP request will return a <em>body</em>.</p>
+
+<p>Since the REST API is of such major importance for many modern systems, it is crucial that the overhead for the programmer to support this interface is absolutely minimized. This specifications leverages the Java type system to provide REST end points. It provides a deterministic mapping from a URI request to a REST method name of a restricted set of methods. Adding a method named according to a defined pattern is all that is required to add a new REST end-point.</p>
+
+<h2 id="rest-methods">REST Methods</h2>
+
+<p>The first parameter of a REST method must be an interface that extends the <code>RESTRequest</code> interface. This interface provides access to the underlying servlet objects as well as the host name. However, these objects are rarely needed; the primary purpose of this interface is to be extended with methods that have the name of the URL arguments. The interface does not have to be public, it can be a private interface of a class. That is, the previous example would need an interface defined as:</p>
+
+<pre><code>interface UpperRequest extends RESTRequest {
+	boolean alphaonly();
+}  
+</code></pre>
+
+<p>Any return type can be used for the REST methods that is supported by the DTO conversion techniques. Note that the actual return type must be a public class and have a public constructor.</p>
+
+<p>Any remaining segments in the URI are mapped to the parameters of the method. These method parameters are not required to be strings. Any parameter type that can be converted from a string according to the DTO conversion techniques can be used. The REST method can either have a fixed number of parameters or it can use varargs for a variable number.</p>
+
+<p>The returned body is defined by the method’s return type. In general, this type is converted to a JSON file according to the DTO JSON conversion rules. All Java’s basic types and all DTO’s can be used as return types.</p>
+
+<p>Since REST requests are always copied (they have to move to another process) it is allowed to return original copies; the REST implementation must not modify the returned objects in any way.</p>
+
+<p>Therefore, the previous example can be defined as:</p>
+
+<pre><code>@Component
+public class UpperApplication implements REST {
+
+	interface UpperRequest extends RESTRequest {
+		boolean alphaonly();
+	}
+	  
+	public String getUpper( UpperRequest request, String string ) {
+		return string.toUpperCase();
+	}
+}
+</code></pre>
+
+<p>Assuming a default root of <code>/rest</code>, this will provide a REST end-point of the earlier example URL.</p>
+
+<h2 id="extra-conversions-for-the-body">Extra Conversions for the Body</h2>
+
+<p>Certain return types of the REST method are not mapped to JSON but are treated differently. These are the special conversions: </p>
+
+<ul>
+  <li><code>InputStream</code> – Will be copied directly to the output.</li>
+  <li><code>File</code> – The File contents will be copied to the output.</li>
+  <li><code>byte[]</code> – The content of the byte array will be copied to the output</li>
+  <li><code>null</code> – Nothing will be copied to the output. The method could have used the servlet objects to send output for rare cases.</li>
+</ul>
+
+<p>If the content type has not been set by the method then the default MIME type will be <code>application/octet-stream</code> for these conversions.</p>
+
+<h2 id="pay-loads">Pay-loads</h2>
+
+<p><code>POST</code> and <code>PUT</code> URLs carry a pay-load from the client to the server. For this specification this pay-load must be expressed as a JSON body (<code>application/json;charset=UTF-8</code>). No other type of bodies are allowed.</p>
+
+<p>The Java type of the pay-load is defined by the return type of the <code>_body()</code> method on the request parameter of the REST method. The incoming JSON pay-load is mapped to this return type following the JSON DTO conversion rules. </p>
+
+<p>For example, a system has to handle people, so there is a (we know, simplistic) Person record.</p>
+
+<pre><code>public class Person extends DTO {
+	publci String id;
+	public String name;
+	public String middle;
+	public String surname;
+	public int birthYear;
+}
+</code></pre>
+
+<p>In REST protocols, the <code>PUT</code> verb would be used to store a new person. To create the proper end-point, we can define the following REST method.</p>
+
+<pre><code>interface PersonRequest extends RESTRequest {
+	Person _body();
+}
+
+Person putPerson( PersonRequest request ) {
+
+	// authorization
+	
+	Person p = request._body();
+	
+	// augment
+	// validate
+	// persist, set id
+	
+	return p;
+}
+</code></pre>
+
+<h2 id="exceptions">Exceptions</h2>
+
+<p>Since the REST methods provide full type safe access to the parameters and remaining URL segments a significant amount of validation is executed by the implementation of this service. These validations will result in the appropriate HTTP error and status code. Implementation should also add explanatory texts to the response.</p>
+
+<p>Additionally, the REST methods may throw any exception, if an exception is thrown it is also translated to an HTTP error code. The conversions from exception to status code is as follows:</p>
+
+<ul>
+  <li>File Not Found Exception – 404 NOT FOUND</li>
+  <li>Security Exception – 403 FORBIDDEN</li>
+</ul>
+
+<p>All other exceptions are translated to a 500 SERVER ERROR error code.</p>
+
+<p>Clients can always set the response of the request through the servlet objects that are available on the RESTRequest arguments. However, this should in general be a last resort since most incompatibilities are caused by the sometimes really subtle interpretations of these error codes. In general it is best to try to make requests binary: succeed when all goes OK and fail in all other cases.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Implementations must follow the PID <code>osgi.enroute.rest</code> which must support at least the following fields:</p>
+
+<ul>
+  <li><code>alias</code> – The primary end-point</li>
+</ul>
+
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href=''></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>
