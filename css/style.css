@@ -856,6 +856,11 @@ pre.shell {
   color: white;
   background-color: black; }
 
+div.hide {
+  color: white; }
+  div.hide:hover {
+    color: black; }
+
 			</div>
 	</ul>
 
