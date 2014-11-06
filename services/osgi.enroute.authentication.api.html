@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
+
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>osgi.enroute.authentication.api</title>
+
+
+</head>
+
+
+<body>
+
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><a style="display:block;float:right;margin-right:0px;" href=http://www.osgi.org">OSGi</a></div>
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Guide</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-services.html">Service Catalog</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<img class=short-header src="/img/header-short-book.png">
+			<div class='notes-margin book'>
+				<h1> osgi.enroute.authentication.api</h1>
+				<p><img src="/img/services/authenticator-service.png" alt="Authenticator Service" /></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>It goes without saying that automated systems that are networked are highly vulnerable to external attacks. Malicious people are continuously scanning ports of every accessible IP number. One of the first line of defense is to prevent unauthorized users to access the system in the first place. To decide the authorization, it is first needed to establish the identity of the user (or its role). As usual, there are many ways to skin a cat and authentication is trying to prove that point. There are hundreds if not thousands of types of authentication; from the humble password verification, the iris scan, all the way to the multi-factor authentication mechanisms.</p>
+
+<p>It is  unlikely that a single API can handle this myriad of mechanisms, however, let’s have a try. This service API assumes the <em>credentials</em> are collected remotely, usually a browser. Credentials are the information tokens that allow users to prove that they are who they say they are. Simple credentials are user id and a password. Since the password is only known to the user (hopefully) we can assume that the remote side is indeed manned by the proper principal. </p>
+
+<p>Modern authentication systems use a delegation model to minimize the need to keep credentials. For example, Mozilla’s Persona uses a more complicated scheme to reduce the number of places where a user has to use a password. This scheme works as follows:</p>
+
+<ul>
+  <li>The application Javascript requests a login token</li>
+  <li>The user is providing its user Id and password to Mozilla’s server over a protected connection</li>
+  <li>The Mozilla server returns a unique token</li>
+  <li>The application Javascript receives the token and ships it to its own server</li>
+  <li>The application server contacts the Mozilla server, which returns the user id</li>
+</ul>
+
+<p>In this model the user does not have to entrust its password with every site while still providing proper authentication. Schemes like OAuth extend this model further allowing the user to give limited access to its profile data to the visited site. The beauty of the scheme is that the user can always withdraw that authorization without talking to the specific site.</p>
+
+<p>So, assuming we have these kind of schemes we need a mechanism to allow the remote party to provide some credentials to an authenticator module that knows what to do with these credentials. This authenticator should then provide us with a system wide unique id for that user. Well, unique within our system. In general this should be an id that can be used, for example, with the User Admin service.</p>
+
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href=''></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>
