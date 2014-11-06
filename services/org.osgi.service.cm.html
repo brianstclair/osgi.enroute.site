@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jpm">
 
+	<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/style.css" rel="stylesheet" />
+<title>org.osgi.service.cm</title>
+
+
+</head>
+
+
+<body>
+
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+
+	<ul class="container12 menu-bar">
+	<li span=10><a class=menu-link href="/"><img class=menu-logo
+			src='/img/EnRouteIcon_CMYK.png'></a> <a
+		href="/book/100-introduction.html">Guide </a><a
+		href="/book/400-services.html">Services </a><a
+		href="/book/700-links.html">Links </a><a
+		href="/forum.html">Forum</a>
+	<li class=menu-link span=1>
+	<li class=menu-link span=1><a style="display:block;float:right;margin-right:0px;" href=http://www.osgi.org">OSGi</a></div>
+	
+</ul>
+
+
+					
+
+	<ul class=container12>
+		<li span=3>
+			<div>
+			<ul class="side-nav">
+	
+		
+			<li><a href="/book/100-introduction.html">Guide</a>
+	  	
+  	
+		
+			<li><a href="/book/200-quick-start.html">Quick Start Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/210-overview.html">Overview</a>
+	  	
+  	
+		
+			<li><a href="/book/215-sos.html">Building Service Oriented Systems</a>
+	  	
+  	
+		
+			<li><a href="/book/220-tutorial-base.html">Base Tutorial</a>
+	  	
+  	
+		
+			<li><a href="/book/300-principles.html">Principles</a>
+	  	
+  	
+		
+			<li><a href="/book/400-services.html">Service Catalog</a>
+	  	
+  	
+		
+			<li><a href="/book/700-links.html">Where to Find Stuff</a>
+	  	
+  	
+</ul>
+
+			</div>
+			
+		<li span=9>
+			<img class=short-header src="/img/header-short-book.png">
+			<div class='notes-margin book'>
+				<h1> org.osgi.service.cm</h1>
+				<p>The Configuration Admin service is an important aspect of the deployment of an OSGi framework. It allows an Operator to configure deployed bundles. Configuring is the process of defining the con- figuration data for bundles and assuring that those bundles receive that data when they are active in the OSGi framework.</p>
+
+<p>This specification is based on the concept of a Configuration Admin service that manages the con- figuration of an OSGi framework. It maintains a database of Configuration objects, locally or re- motely. This service monitors the service registry and provides configuration information to ser- vices that are registered with a service.pid property, the Persistent IDentity (PID), and implement one of the following interfaces:</p>
+
+<ul>
+  <li>Managed Service – A service registered with this interface receives its configuration dictionary from the database or receives null when no such configuration exists.</li>
+  <li>Managed Service Factory – Services registered with this interface can receive several configuration dictionaries when registered. The database contains zero or more configuration dictionaries for this service. Each configuration dictionary is given sequentially to the service.</li>
+</ul>
+
+<p>The database can be manipulated either by the Management Agent or bundles that configure them- selves. Other parties can provide Configuration Plugin services. Such services participate in the con- figuration process. They can inspect the configuration dictionary and modify it before it reaches the target service.</p>
+
+			</div>
+	</ul>
+
+	
+<nav class=next-prev>
+	<a href=''></a> <a href=''></a>
+</nav>
+<footer class="container12" style="border-top: 1px solid black;padding:10px 0">
+	<ul span=12 row>
+		<li span=3>
+			<ul>
+				<li><a href="/contact.html">Contact</a>
+			</ul>
+		<li span=3>
+			<ul>
+				<li><a href="">Developers</a>
+			</ul>
+		<li span=4>
+			<ul>
+				<li><a href="">More</a>
+			</ul>
+		<li span=2>
+			<a href="http://www.osgi.org"><img style="float:right;width:8em" src="/img/osgi-logo-256.png"></a>
+	</ul>
+</footer>
+
+</body>
+</html>
