@@ -110,9 +110,10 @@
 <ul>
   <li><a href="https://github.com/osgi/osgi.enroute.site"><code>osgi.enroute.site</code></a> – This website! Don’t whine about this website, clone it, change it, and create a pull-request. All contributions welcome.   </li>
   <li><a href="https://github.com/osgi/osgi.enroute"><code>osgi.enroute</code></a> – The OSGi enRoute Profile and Distro repository. This repository is the source for the OSGi enRoute  profiles. You will find the definition here as well as the sources for the service contracts that are not (yet?) part of the OSGi standards.</li>
-  <li><a href="https://github.com/osgi/workspace"><code>workspace</code></a> – The OSGi enRoute template for a bnd workspace. This template creates a bnd environment that is all setup to go. It also contains the OSGi enRoute default distro. </li>
-  <li><a href="https://github.com/osgi/bundles"><code>bundles</code></a> – Some of the services in the OSGi enRoute Base Profile are new and do not have open source implementations (yet!). This repository provides default, and mostly rather simple, implementations for these services. We’re actively pushing these projects into one of the major open source projects.</li>
-  <li><a href="https://github.com/osgi/osgi.enroute.template"><code>osgi.enroute.template</code></a> – This project provides the base for the bndtools project templates. </li>
+  <li><a href="https://github.com/osgi/workspace"><code>workspace</code></a> – The OSGi enRoute template for a bnd workspace. This template creates a bnd environment that is all setup to go. It also contains the OSGi enRoute default distro at the latest revision. </li>
+  <li><a href="https://github.com/osgi/osgi.enroute.bundles"><code>osgi.enroute.bundles</code></a> – Some of the services in the OSGi enRoute Base Profile are new and do not have open source implementations (yet!). This repository provides default, and mostly rather simple, implementations for these services. We’re actively pushing these projects into one of the major open source projects.</li>
+  <li><a href="https://github.com/osgi/osgi.enroute.template"><code>osgi.enroute.template</code></a> – This repository is an OSGi enRoute workspace for project templates in bndtools. It is a normal workspace but it uses weird names so these names can be replaced when the template is expanded. The template must currently manually be imported in the bndtools build.</li>
+  <li><a href="https://github.com/osgi/osgi.enroute.examples"><code>osgi.enroute.examples</code></a> – The OSGi enRoute service catalog demonstrates the use of the OSGi API with small examples. These examples can be found in this repository. </li>
 </ul>
 
 <h3 id="tools">Tools</h3>
@@ -120,7 +121,7 @@
 <p>In sorted order:</p>
 
 <ul>
-  <li>[bnd(tools)[(http://bndtools.org) – The bnd(tools) project provides the underlying engine for the OSGi enRoute tool chain as well as the Eclipse bndtools plugin. You can find their repositories at <a href="https://github.com/bndtools">Github</a>.</li>
+  <li>[bnd(tools)[(http://bndtools.org) – The bnd(tools) project provides the underlying engine for the OSGi enRoute tool chain as well as the Eclipse bndtools plugin. You can find their repositories at <a href="https://github.com/bndtools">Github</a>. For the moment, please install the latest release from <a href="https://bndtools.ci.cloudbees.com/job/bndtools.master/lastSuccessfulBuild/artifact/build/generated/p2/">Cloudbees</a>.</li>
   <li><a href="http://eclipse.org">Eclipse</a>  – The Eclipse Foundation provides the unsurpassed IDE that forms the basis of the ease of use </li>
   <li><a href="https://github.com">Git &amp; Github</a> – Git provides the unsurpassed source control management system. </li>
   <li><a href="http://www.gradle.org/">Gradle</a> - The command line based build tool used in the continuous build on Travis.
